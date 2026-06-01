@@ -1,0 +1,32 @@
+@import './colors.css';
+
+@theme {
+  --color-primary-900: rgb(var(--primary-900-rgb));
+  --color-primary-800: rgb(var(--primary-800-rgb));
+  --color-primary-700: rgb(var(--primary-700-rgb));
+  --color-primary-600: rgb(var(--primary-600-rgb));
+  --color-primary-500: rgb(var(--primary-500-rgb));
+  --color-primary-400: rgb(var(--primary-400-rgb));
+  --color-primary-300: rgb(var(--primary-300-rgb));
+  --color-primary-200: rgb(var(--primary-200-rgb));
+  --color-primary-100: rgb(var(--primary-100-rgb));
+  --color-primary-50: rgb(var(--primary-50-rgb));
+
+  --color-secondary-900: rgb(var(--secondary-900-rgb));
+  --color-secondary-800: rgb(var(--secondary-800-rgb));
+  --color-secondary-700: rgb(var(--secondary-700-rgb));
+  --color-secondary-600: rgb(var(--secondary-600-rgb));
+  --color-secondary-500: rgb(var(--secondary-500-rgb));
+  --color-secondary-400: rgb(var(--secondary-400-rgb));
+  --color-secondary-300: rgb(var(--secondary-300-rgb));
+  --color-secondary-200: rgb(var(--secondary-200-rgb));
+  --color-secondary-100: rgb(var(--secondary-100-rgb));
+  --color-secondary-50: rgb(var(--secondary-50-rgb));
+  --color-secondary-0: rgb(var(--secondary-0-rgb));
+
+  --color-success: rgb(var(--success-rgb));
+  --color-warning: rgb(var(--warning-rgb));
+  --color-error: rgb(var(--error-rgb));
+  --color-red-500: rgb(var(--red-500-rgb));
+  --color-red-300: rgb(var(--red-300-rgb));
+}

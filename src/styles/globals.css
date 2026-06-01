@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@import "./theme.css";
+@import './colors.css';
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  background-color: rgb(var(--background-app-rgb));
+  font-family: Arial, Helvetica, sans-serif;
+}
