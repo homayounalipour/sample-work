@@ -1,7 +1,5 @@
+import TranslationWorkspace from '@/components/TranslationWorkspace';
+
 export default function Home() {
-  return (
-    <div>
-      <p className="text-success">hello next.js</p>
-    </div>
-  );
+  return <TranslationWorkspace />;
 }

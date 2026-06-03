@@ -1,48 +1,73 @@
 :root {
   &,
   &.light-mode {
-    --background-app-rgb: 249, 250, 251;
-    --primary-900-rgb: 74, 109, 255;
-    --primary-800-rgb: 92, 124, 255;
-    --primary-700-rgb: 110, 138, 255;
-    --primary-600-rgb: 128, 153, 255;
-    --primary-500-rgb: 146, 167, 255;
-    --primary-400-rgb: 164, 182, 255;
-    --primary-300-rgb: 183, 197, 255;
-    --primary-200-rgb: 201, 211, 255;
-    --primary-100-rgb: 219, 226, 255;
-    --primary-50-rgb: 228, 233, 255;
-    --secondary-900-rgb: 17, 24, 39;
-    --secondary-800-rgb: 31, 41, 55;
-    --secondary-700-rgb: 55, 65, 81;
-    --secondary-600-rgb: 75, 85, 99;
-    --secondary-500-rgb: 107, 114, 128;
-    --secondary-400-rgb: 156, 163, 175;
-    --secondary-300-rgb: 209, 213, 219;
-    --secondary-200-rgb: 229, 231, 235;
-    --secondary-100-rgb: 243, 244, 246;
-    --secondary-50-rgb: 249, 250, 251;
-    --secondary-0-rgb: 255, 255, 255;
-    --success-rgb: 0, 192, 115;
-    --warning-rgb: 255, 153, 0;
-    --error-rgb: 255, 71, 87;
-    --red-500-rgb: 239, 68, 68;
-    --red-300-rgb: 252, 165, 165;
+    /* Background — page-level layers */
+    --background-default-rgb: 255 255 255;
+    --background-subtle-rgb: 248 250 252;
+    --background-muted-rgb: 241 245 249;
+
+    /* Surface — component/card layers */
+    --surface-default-rgb: 255 255 255;
+    --surface-subtle-rgb: 248 250 252;
+
+    /* Text */
+    --text-default-rgb: 15 23 42;
+    --text-subtle-rgb: 71 85 105;
+    --text-muted-rgb: 148 163 184;
+
+    /* Border */
+    --border-default-rgb: 226 232 240;
+    --border-strong-rgb: 203 213 225;
+
+    /* Primary — brand accent scale */
+    --primary-subtle-rgb: 238 242 255;
+    --primary-soft-rgb: 224 231 255;
+    --primary-default-rgb: 99 102 241;
+    --primary-emphasis-rgb: 79 70 229;
+    --primary-strong-rgb: 67 56 202;
+
+    /* Status — feedback colors */
+    --status-success-rgb: 34 197 94;
+    --status-warning-rgb: 245 158 11;
+    --status-error-rgb: 239 68 68;
+    --status-info-rgb: 14 165 233;
+
+    /* Shadow */
+    --shadow-surface: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.18);
   }
 
   &.dark-mode {
-    --background-app-rgb: 20, 20, 20;
-    --secondary-900-rgb: 249, 250, 251;
-    --secondary-800-rgb: 243, 244, 246;
-    --secondary-700-rgb: 229, 231, 235;
-    --secondary-600-rgb: 209, 213, 219;
-    --secondary-500-rgb: 156, 163, 175;
-    --secondary-400-rgb: 107, 114, 128;
-    --secondary-300-rgb: 75, 85, 99;
-    --secondary-200-rgb: 55, 65, 81;
-    --secondary-100-rgb: 31, 41, 55;
-    --secondary-50-rgb: 17, 24, 39;
-    --secondary-0-rgb: 24, 33, 47;
-    --backdrop-color: 0, 0, 0;
+    /* Background */
+    --background-default-rgb: 9 9 11;
+    --background-subtle-rgb: 17 17 19;
+    --background-muted-rgb: 24 24 27;
+
+    /* Surface */
+    --surface-default-rgb: 17 17 19;
+    --surface-subtle-rgb: 24 24 27;
+
+    /* Text */
+    --text-default-rgb: 250 250 250;
+    --text-subtle-rgb: 161 161 170;
+    --text-muted-rgb: 113 113 122;
+
+    /* Border */
+    --border-default-rgb: 39 39 42;
+    --border-strong-rgb: 63 63 70;
+
+    /* Primary */
+    --primary-subtle-rgb: 49 46 129;
+    --primary-soft-rgb: 67 56 202;
+    --primary-default-rgb: 129 140 248;
+    --primary-emphasis-rgb: 99 102 241;
+    --primary-strong-rgb: 79 70 229;
+
+    /* Status */
+    --status-success-rgb: 52 211 153;
+    --status-warning-rgb: 251 191 36;
+    --status-error-rgb: 248 113 113;
+    --status-info-rgb: 34 211 238;
   }
 }
