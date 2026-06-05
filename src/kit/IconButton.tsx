@@ -8,18 +8,19 @@ type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'ghost';
 };
 
-export default function IconButton({
-  className,
-  size = 'md',
-  variant = 'default',
-  children,
-  ...props
-}: IconButtonProps) {
+export default function IconButton(props: IconButtonProps) {
+  const {
+    className,
+    size = 'md',
+    variant = 'default',
+    children,
+    ...rest
+  } = props;
   return (
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center rounded-[var(--radius-md)] transition-colors focus-visible:ring-2 focus-visible:ring-primary',
+        'inline-flex items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-primary',
         size === 'sm' ? 'h-8 w-8' : 'h-10 w-10',
         variant === 'default'
           ? 'bg-background-muted border border-border text-text-subtle hover:bg-surface-subtle hover:text-text'
@@ -27,7 +28,7 @@ export default function IconButton({
         'disabled:opacity-50',
         className,
       )}
-      {...props}
+      {...rest}
     >
       {children}
     </button>

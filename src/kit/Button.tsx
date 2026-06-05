@@ -35,19 +35,20 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'h-11 px-5 text-body-md gap-2 rounded-[var(--radius-md)]',
 };
 
-export default function Button({
-  children,
-  className,
-  variant = 'primary',
-  size = 'md',
-  fullWidth = false,
-  isLoading = false,
-  leftIcon,
-  rightIcon,
-  disabled,
-  type = 'button',
-  ...props
-}: ButtonProps) {
+export default function Button(props: ButtonProps) {
+  const {
+    children,
+    className,
+    variant = 'primary',
+    size = 'md',
+    fullWidth = false,
+    isLoading = false,
+    leftIcon,
+    rightIcon,
+    disabled,
+    type = 'button',
+    ...rest
+  } = props;
   return (
     <button
       type={type}
@@ -59,7 +60,7 @@ export default function Button({
         fullWidth && 'w-full',
         className,
       )}
-      {...props}
+      {...rest}
     >
       {isLoading ? (
         <Spinner size="sm" />

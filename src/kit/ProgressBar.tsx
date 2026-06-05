@@ -8,13 +8,8 @@ type ProgressBarProps = {
   label?: string;
 };
 
-export default function ProgressBar({
-  value,
-  max = 100,
-  className,
-  showLabel,
-  label,
-}: ProgressBarProps) {
+export default function ProgressBar(props: ProgressBarProps) {
+  const {className, showLabel, label, value, max = 100} = props;
   const percent = Math.min(100, Math.max(0, (value / max) * 100));
 
   return (
@@ -29,9 +24,9 @@ export default function ProgressBar({
           )}
         </div>
       )}
-      <div className="h-1.5 w-full overflow-hidden rounded-[var(--radius-pill)] bg-background-muted">
+      <div className="h-1.5 w-full overflow-hidden rounded-pill bg-background-muted">
         <div
-          className="h-full rounded-[var(--radius-pill)] bg-primary transition-all duration-300"
+          className="h-full rounded-pill bg-primary transition-all duration-300"
           style={{width: `${percent}%`}}
         />
       </div>

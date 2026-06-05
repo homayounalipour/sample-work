@@ -48,11 +48,11 @@ export default function TranslationWorkspace() {
           <UploadZone
             onFileSelect={workflow.onFileSelect}
             onError={workflow.onUploadError}
-            className="min-h-[400px] flex-1"
+            className="min-h-100 flex-1"
           />
         ) : (
           <div className="flex min-h-0 flex-1 gap-4">
-            <div className="flex min-h-0 min-w-0 flex-[1.4]">
+            <div className="flex min-h-0 min-w-0 flex-1">
               <ImageViewer
                 imageUrl={workflow.displayUrl}
                 zoom={workflow.zoom}

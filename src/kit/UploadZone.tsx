@@ -1,5 +1,3 @@
-'use client';
-
 import React, {useCallback, useRef, useState} from 'react';
 import cn from '@/utils/mergeClassNameTailwind';
 import {IconUpload} from './icons';
@@ -14,12 +12,8 @@ type UploadZoneProps = {
   disabled?: boolean;
 };
 
-export default function UploadZone({
-  onFileSelect,
-  onError,
-  className,
-  disabled = false,
-}: UploadZoneProps) {
+export default function UploadZone(props: UploadZoneProps) {
+  const {onFileSelect, onError, className, disabled = false} = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -67,7 +61,7 @@ export default function UploadZone({
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       className={cn(
-        'flex cursor-pointer flex-col items-center justify-center rounded-[var(--radius-lg)] border-2 border-dashed px-6 py-12 transition-colors',
+        'flex cursor-pointer flex-col items-center justify-center rounded-(--radius-lg) border-2 border-dashed px-6 py-12 transition-colors',
         isDragging
           ? 'border-primary bg-primary/10'
           : 'border-border-strong bg-background-subtle hover:border-primary/50 hover:bg-surface-subtle',

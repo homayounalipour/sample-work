@@ -2,7 +2,8 @@ import React from 'react';
 
 type IconProps = {className?: string};
 
-export function IconSearch({className = 'h-4 w-4'}: IconProps) {
+export function IconSearch(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -20,7 +21,8 @@ export function IconSearch({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconUpload({className = 'h-6 w-6'}: IconProps) {
+export function IconUpload(props: IconProps) {
+  const {className = 'h-6 w-6'} = props;
   return (
     <svg
       className={className}
@@ -38,7 +40,8 @@ export function IconUpload({className = 'h-6 w-6'}: IconProps) {
   );
 }
 
-export function IconChevronDown({className = 'h-4 w-4'}: IconProps) {
+export function IconChevronDown(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -52,7 +55,8 @@ export function IconChevronDown({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconArrowRight({className = 'h-4 w-4'}: IconProps) {
+export function IconArrowRight(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -70,7 +74,8 @@ export function IconArrowRight({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconDownload({className = 'h-4 w-4'}: IconProps) {
+export function IconDownload(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -88,7 +93,8 @@ export function IconDownload({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconHistory({className = 'h-4 w-4'}: IconProps) {
+export function IconHistory(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -106,7 +112,8 @@ export function IconHistory({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconClose({className = 'h-4 w-4'}: IconProps) {
+export function IconClose(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -124,7 +131,8 @@ export function IconClose({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconCheck({className = 'h-4 w-4'}: IconProps) {
+export function IconCheck(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -138,7 +146,8 @@ export function IconCheck({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconSwap({className = 'h-4 w-4'}: IconProps) {
+export function IconSwap(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -156,7 +165,8 @@ export function IconSwap({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconLogo({className = 'h-8 w-8'}: IconProps) {
+export function IconLogo(props: IconProps) {
+  const {className = 'h-8 w-8'} = props;
   return (
     <svg className={className} viewBox="0 0 32 32" fill="none">
       <rect
@@ -175,7 +185,8 @@ export function IconLogo({className = 'h-8 w-8'}: IconProps) {
   );
 }
 
-export function IconPlus({className = 'h-4 w-4'}: IconProps) {
+export function IconPlus(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -189,7 +200,8 @@ export function IconPlus({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconMinus({className = 'h-4 w-4'}: IconProps) {
+export function IconMinus(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -203,7 +215,8 @@ export function IconMinus({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconRotate({className = 'h-4 w-4'}: IconProps) {
+export function IconRotate(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}
@@ -221,7 +234,8 @@ export function IconRotate({className = 'h-4 w-4'}: IconProps) {
   );
 }
 
-export function IconFlip({className = 'h-4 w-4'}: IconProps) {
+export function IconFlip(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
   return (
     <svg
       className={className}

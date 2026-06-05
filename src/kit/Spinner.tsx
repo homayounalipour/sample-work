@@ -11,7 +11,8 @@ const sizeMap = {
   lg: 'h-6 w-6 border-[3px]',
 };
 
-export default function Spinner({className, size = 'md'}: SpinnerProps) {
+export default function Spinner(props: SpinnerProps) {
+  const {className, size = 'md'} = props;
   return (
     <span
       className={cn(

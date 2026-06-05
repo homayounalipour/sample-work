@@ -21,13 +21,8 @@ type LanguageSelectorProps = {
   disabled?: boolean;
 };
 
-export default function LanguageSelector({
-  value,
-  options,
-  onChange,
-  className,
-  disabled = false,
-}: LanguageSelectorProps) {
+export default function LanguageSelector(props: LanguageSelectorProps) {
+  const {value, options, onChange, className, disabled = false} = props;
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
       <div className={cn('relative', className)}>

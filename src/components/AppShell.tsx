@@ -7,7 +7,8 @@ type AppShellProps = PropsWithChildren<{
   activeNav?: string;
 }>;
 
-export default function AppShell({children, activeNav = 'new'}: AppShellProps) {
+export default function AppShell(props: AppShellProps) {
+  const {children, activeNav = 'new'} = props;
   return (
     <div className="flex h-screen min-h-0 overflow-hidden bg-background">
       <Sidebar activeNav={activeNav} />

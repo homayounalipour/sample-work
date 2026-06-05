@@ -8,11 +8,8 @@ type TranslationHeaderProps = {
   isExporting?: boolean;
 };
 
-export default function TranslationHeader({
-  onExport,
-  exportDisabled,
-  isExporting,
-}: TranslationHeaderProps) {
+export default function TranslationHeader(props: TranslationHeaderProps) {
+  const {exportDisabled, isExporting, onExport} = props;
   return (
     <header className="flex shrink-0 items-start justify-between border-b border-border px-6 py-5">
       <div>

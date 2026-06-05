@@ -9,13 +9,8 @@ type CheckboxProps = {
   className?: string;
 };
 
-export default function Checkbox({
-  checked,
-  onChange,
-  label,
-  disabled,
-  className,
-}: CheckboxProps) {
+export default function Checkbox(props: CheckboxProps) {
+  const {checked, onChange, label, disabled, className} = props;
   return (
     <label
       className={cn(

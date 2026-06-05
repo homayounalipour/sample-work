@@ -16,12 +16,10 @@ type SidebarProps = {
   onNavChange?: (id: string) => void;
 };
 
-export default function Sidebar({
-  activeNav = 'new',
-  onNavChange,
-}: SidebarProps) {
+export default function Sidebar(props: SidebarProps) {
+  const {activeNav = 'new', onNavChange} = props;
   return (
-    <aside className="flex h-full w-60 shrink-0 flex-col border-r border-border bg-background-subtle px-4 py-6">
+    <aside className="flex h-full w-72 shrink-0 flex-col border-r border-border bg-background-subtle px-4 py-6">
       <div className="mb-8 flex items-center gap-3 px-2">
         <IconLogo />
         <div>

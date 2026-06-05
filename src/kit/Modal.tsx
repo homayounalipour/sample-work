@@ -19,16 +19,17 @@ type ModalProps = {
   className?: string;
 };
 
-export default function Modal({
-  open,
-  onClose,
-  title,
-  description,
-  children,
-  primaryAction,
-  secondaryAction,
-  className,
-}: ModalProps) {
+export default function Modal(props: ModalProps) {
+  const {
+    open,
+    onClose,
+    title,
+    description,
+    children,
+    primaryAction,
+    secondaryAction,
+    className,
+  } = props;
   return (
     <Dialog open={open} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/60 transition-opacity" />

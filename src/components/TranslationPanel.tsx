@@ -1,11 +1,9 @@
-'use client';
-
 import Button from '@/kit/Button';
 import LanguageSelector, {LanguageOption} from '@/kit/LanguageSelector';
 import Spinner from '@/kit/Spinner';
 import {IconArrowRight, IconSwap} from '@/kit/icons';
 import IconButton from '@/kit/IconButton';
-import type {TranslationBlock} from '../types/types';
+import type {TranslationBlock} from '@/types/types';
 
 type TranslationPanelProps = {
   sourceLang: LanguageOption;
@@ -23,23 +21,25 @@ type TranslationPanelProps = {
   applyDisabled?: boolean;
 };
 
-export default function TranslationPanel({
-  sourceLang,
-  targetLang,
-  languages,
-  onSourceChange,
-  onTargetChange,
-  onSwap,
-  translations,
-  onTranslate,
-  onApply,
-  isTranslating,
-  isApplying,
-  translateDisabled,
-  applyDisabled,
-}: TranslationPanelProps) {
+export default function TranslationPanel(props: TranslationPanelProps) {
+  const {
+    isTranslating,
+    translations,
+    onTranslate,
+    onApply,
+    isApplying,
+    translateDisabled,
+    applyDisabled,
+    onSwap,
+    onSourceChange,
+    onTargetChange,
+    targetLang,
+    languages,
+    sourceLang,
+  } = props;
+
   return (
-    <div className="flex min-h-0 w-[300px] shrink-0 flex-col rounded-[var(--radius-lg)] border border-border bg-surface">
+    <div className="flex min-h-0 w-75 shrink-0 flex-col rounded-(--radius-lg) border border-border bg-surface">
       <div className="border-b border-border px-4 py-4">
         <div className="flex items-center gap-2">
           <LanguageSelector
@@ -74,7 +74,7 @@ export default function TranslationPanel({
           translations.map(item => (
             <div
               key={item.id}
-              className="rounded-[var(--radius-md)] border border-border bg-background-subtle px-3 py-2.5"
+              className="rounded-md border border-border bg-background-subtle px-3 py-2.5"
             >
               <p className="text-body-md text-text">{item.text}</p>
             </div>

@@ -1,5 +1,3 @@
-'use client';
-
 import {Transition} from '@headlessui/react';
 import cn from '@/utils/mergeClassNameTailwind';
 
@@ -16,7 +14,8 @@ type ToastProps = {
   onDismiss: (id: string) => void;
 };
 
-export default function Toast({toast, show, onDismiss}: ToastProps) {
+export default function Toast(props: ToastProps) {
+  const {show, onDismiss, toast} = props;
   return (
     <Transition
       show={show}
@@ -29,7 +28,7 @@ export default function Toast({toast, show, onDismiss}: ToastProps) {
     >
       <div
         className={cn(
-          'pointer-events-auto w-80 rounded-[var(--radius-md)] border border-border bg-surface p-4 shadow-elevated',
+          'pointer-events-auto w-80 rounded-md border border-border bg-surface p-4 shadow-elevated',
           toast.variant === 'success' && 'border-success/30',
         )}
       >

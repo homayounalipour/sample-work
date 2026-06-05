@@ -1,5 +1,3 @@
-'use client';
-
 import Button from '@/kit/Button';
 import IconButton from '@/kit/IconButton';
 import Spinner from '@/kit/Spinner';
@@ -19,22 +17,24 @@ type ImageViewerProps = {
   loadingLabel?: string;
 };
 
-export default function ImageViewer({
-  imageUrl,
-  zoom,
-  onZoomChange,
-  rotation,
-  flipH,
-  onRotate,
-  onFlip,
-  onReplace,
-  isLoading,
-  loadingLabel,
-}: ImageViewerProps) {
+export default function ImageViewer(props: ImageViewerProps) {
+  const {
+    imageUrl,
+    isLoading,
+    loadingLabel,
+    onFlip,
+    onReplace,
+    flipH,
+    onRotate,
+    rotation,
+    zoom,
+    onZoomChange,
+  } = props;
+
   if (!imageUrl) return null;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col rounded-[var(--radius-lg)] border border-border bg-surface">
+    <div className="flex min-h-0 flex-1 flex-col rounded-(--radius-lg) border border-border bg-surface">
       <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden p-4">
         {isLoading && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background/80">
@@ -44,7 +44,7 @@ export default function ImageViewer({
             </p>
           </div>
         )}
-        <div className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-[var(--radius-md)] border border-border bg-background/90 px-2 py-1 backdrop-blur-sm">
+        <div className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-md border border-border bg-background/90 px-2 py-1 backdrop-blur-sm">
           <IconButton
             size="sm"
             onClick={() => onZoomChange(Math.max(50, zoom - 10))}

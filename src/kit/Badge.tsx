@@ -1,4 +1,5 @@
 import cn from '@/utils/mergeClassNameTailwind';
+import React from 'react';
 
 export type BadgeVariant = 'new' | 'completed' | 'failed' | 'default';
 
@@ -15,15 +16,12 @@ const variantClasses: Record<BadgeVariant, string> = {
   default: 'bg-background-muted text-text-subtle',
 };
 
-export default function Badge({
-  children,
-  variant = 'default',
-  className,
-}: BadgeProps) {
+export default function Badge(props: BadgeProps) {
+  const {children, className, variant = 'default'} = props;
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-[var(--radius-pill)] px-2.5 py-0.5 text-caption font-medium',
+        'inline-flex items-center rounded-pill px-2.5 py-0.5 text-caption font-medium',
         variantClasses[variant],
         className,
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import Spinner from '@/kit/Spinner';
-import type {OcrBlock} from '../types/types';
+import type {OcrBlock} from '@/types/types';
 
 type OcrResultsPanelProps = {
   blocks: OcrBlock[];
@@ -9,13 +9,10 @@ type OcrResultsPanelProps = {
   progress?: number;
 };
 
-export default function OcrResultsPanel({
-  blocks,
-  isLoading,
-  progress = 0,
-}: OcrResultsPanelProps) {
+export default function OcrResultsPanel(props: OcrResultsPanelProps) {
+  const {progress = 0, isLoading, blocks} = props;
   return (
-    <div className="flex min-h-0 w-[280px] shrink-0 flex-col rounded-[var(--radius-lg)] border border-border bg-surface">
+    <div className="flex min-h-0 w-70 shrink-0 flex-col rounded-(--radius-lg) border border-border bg-surface">
       <div className="border-b border-border px-4 py-4">
         <h2 className="text-body-md font-semibold text-text">
           OCR Results {blocks.length > 0 && `(${blocks.length})`}
@@ -37,7 +34,7 @@ export default function OcrResultsPanel({
           blocks.map(block => (
             <div
               key={block.id}
-              className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-2.5"
+              className="rounded-md border border-border bg-background px-3 py-2.5"
             >
               <p className="text-body-md text-text">{block.text}</p>
               <p className="mt-1 text-caption text-text-muted">

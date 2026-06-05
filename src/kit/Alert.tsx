@@ -23,13 +23,8 @@ const variantStyles: Record<AlertVariant, {bg: string; icon: string}> = {
   error: {bg: 'bg-error/10 border-error/30 text-error', icon: 'text-error'},
 };
 
-export default function Alert({
-  variant,
-  title,
-  message,
-  onClose,
-  className,
-}: AlertProps) {
+export default function Alert(props: AlertProps) {
+  const {message, onClose, className, variant, title} = props;
   const styles = variantStyles[variant];
 
   return (

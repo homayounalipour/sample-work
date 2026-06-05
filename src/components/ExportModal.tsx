@@ -7,11 +7,8 @@ type ExportModalProps = {
   onViewFile: () => void;
 };
 
-export default function ExportModal({
-  open,
-  onClose,
-  onViewFile,
-}: ExportModalProps) {
+export default function ExportModal(props: ExportModalProps) {
+  const {onClose, onViewFile, open} = props;
   return (
     <Modal
       open={open}

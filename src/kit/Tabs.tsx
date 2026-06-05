@@ -1,5 +1,3 @@
-'use client';
-
 import cn from '@/utils/mergeClassNameTailwind';
 
 export type TabItem = {id: string; label: string};
@@ -11,7 +9,8 @@ type TabsProps = {
   className?: string;
 };
 
-export default function Tabs({tabs, activeId, onChange, className}: TabsProps) {
+export default function Tabs(props: TabsProps) {
+  const {tabs, activeId, onChange, className} = props;
   return (
     <div className={cn('flex gap-6 border-b border-border', className)}>
       {tabs.map(tab => (
