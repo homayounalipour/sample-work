@@ -25,16 +25,18 @@ export default function LanguageSelector(props: LanguageSelectorProps) {
   const {value, options, onChange, className, disabled = false} = props;
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
-      <div className={cn('relative', className)}>
+      <div className={cn('relative min-w-0', className)}>
         <ListboxButton
           className={cn(
-            'flex h-10 w-full min-w-35 items-center gap-2 rounded-md border border-border bg-background px-3 text-body-md text-text transition-colors',
+            'flex h-10 w-full items-center gap-2 rounded-md border border-border bg-background px-3 text-body-md text-text transition-colors',
             'hover:border-border-strong focus-visible:ring-2 focus-visible:ring-primary',
             disabled && 'opacity-50',
           )}
         >
           <span className="text-base leading-none">{value.flag}</span>
-          <span className="flex-1 truncate text-left">{value.name}</span>
+          <span className="min-w-0 flex-1 truncate text-left">
+            {value.name}
+          </span>
           <IconChevronDown className="h-4 w-4 shrink-0 text-text-muted" />
         </ListboxButton>
         <ListboxOptions

@@ -9,7 +9,7 @@ import {mockTranslateBlocks} from '@/lib/translate/mockTranslate';
 import {runOcr} from '@/lib/ocr/runOcr';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
 import {downloadBlob} from '@/lib/image/downloadBlob';
-import type {OcrBlock, TranslationBlock, WorkflowStatus} from '../types/types';
+import type {OcrBlock, TranslationBlock, WorkflowStatus} from '@/types/types';
 
 const MAX_TOASTS = 4;
 
@@ -20,8 +20,12 @@ export function useTranslationWorkflow() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>([]);
   const [translations, setTranslations] = useState<TranslationBlock[]>([]);
-  const [sourceLang, setSourceLang] = useState<LanguageOption>(LANGUAGES[0]);
-  const [targetLang, setTargetLang] = useState<LanguageOption>(LANGUAGES[1]);
+  const [sourceLang, setSourceLang] = useState<LanguageOption>(
+    () => LANGUAGES[1],
+  );
+  const [targetLang, setTargetLang] = useState<LanguageOption>(
+    () => LANGUAGES[0],
+  );
   const [ocrProgress, setOcrProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [exportModalOpen, setExportModalOpen] = useState(false);

@@ -1,6 +1,7 @@
 import Avatar from '@/kit/Avatar';
 import ProgressBar from '@/kit/ProgressBar';
-import {IconLogo} from '@/kit/icons';
+import {IconClose, IconLogo} from '@/kit/icons';
+import IconButton from '@/kit/IconButton';
 import cn from '@/utils/mergeClassNameTailwind';
 
 const NAV_ITEMS = [
@@ -14,28 +15,50 @@ const NAV_ITEMS = [
 type SidebarProps = {
   activeNav?: string;
   onNavChange?: (id: string) => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 };
 
 export default function Sidebar(props: SidebarProps) {
-  const {activeNav = 'new', onNavChange} = props;
+  const {
+    activeNav = 'new',
+    onNavChange,
+    mobileOpen = false,
+    onMobileClose,
+  } = props;
+
+  const handleNavClick = (id: string) => {
+    onNavChange?.(id);
+    onMobileClose?.();
+  };
+
   return (
-    <aside className="flex h-full w-72 shrink-0 flex-col border-r border-border bg-background-subtle px-4 py-6">
-      <div className="mb-8 flex items-center gap-3 px-2">
-        <IconLogo />
-        <div>
-          <p className="text-body-md font-semibold text-text">ImageTranslate</p>
-          <p className="text-caption text-primary">AI</p>
+    <aside
+      className={cn(
+        'fixed inset-y-0 left-0 z-50 flex h-full w-72 shrink-0 flex-col border-r border-border bg-background-subtle px-4 py-6 transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:translate-x-0',
+        mobileOpen ? 'translate-x-0' : '-translate-x-full',
+      )}
+    >
+      <div className="mb-8 flex items-center justify-between gap-3 px-2">
+        <div className="flex items-center gap-3">
+          <IconLogo />
+          <div>
+            <p className="text-body-md font-semibold text-text">
+              ImageTranslate
+            </p>
+            <p className="text-caption text-primary">AI</p>
+          </div>
         </div>
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1">
+      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
         {NAV_ITEMS.map(item => {
           const isActive = activeNav === item.id;
           return (
             <button
               key={item.id}
               type="button"
-              onClick={() => onNavChange?.(item.id)}
+              onClick={() => handleNavClick(item.id)}
               className={cn(
                 'flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-body-md transition-colors',
                 isActive

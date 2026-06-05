@@ -35,7 +35,7 @@ export default function ImageViewer(props: ImageViewerProps) {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col rounded-(--radius-lg) border border-border bg-surface">
-      <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden p-4">
+      <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden p-2 sm:p-4">
         {isLoading && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-background/80">
             <Spinner size="lg" className="text-primary" />
@@ -44,11 +44,12 @@ export default function ImageViewer(props: ImageViewerProps) {
             </p>
           </div>
         )}
-        <div className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-md border border-border bg-background/90 px-2 py-1 backdrop-blur-sm">
+        <div className="absolute right-2 top-2 z-10 flex items-center gap-1 rounded-md border border-border bg-background/90 px-1.5 py-1 backdrop-blur-sm sm:right-4 sm:top-4 sm:px-2">
           <IconButton
             size="sm"
             onClick={() => onZoomChange(Math.max(50, zoom - 10))}
             aria-label="Zoom out"
+            className="h-3 w-3 md:h-4 md:w-4 lg:h-5 lg:w-5 xl:h-6 xl:w-6 2xl:h-8 2xl:w-8"
           >
             <IconMinus />
           </IconButton>
@@ -59,6 +60,7 @@ export default function ImageViewer(props: ImageViewerProps) {
             size="sm"
             onClick={() => onZoomChange(Math.min(200, zoom + 10))}
             aria-label="Zoom in"
+            className="h-3 w-3 md:h-4 md:w-4 lg:h-5 lg:w-5 xl:h-6 xl:w-6 2xl:h-8 2xl:w-8"
           >
             <IconPlus />
           </IconButton>
@@ -72,19 +74,29 @@ export default function ImageViewer(props: ImageViewerProps) {
           }}
         />
       </div>
-      <div className="flex items-center justify-between border-t border-border px-4 py-3">
-        <Button variant="secondary" size="sm" onClick={onReplace}>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border px-3 py-2.5 sm:px-4 sm:py-3">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={onReplace}
+          className="h-5 md:h-8"
+        >
           Replace Image
         </Button>
         <div className="flex gap-2">
-          <IconButton size="sm" onClick={onRotate} aria-label="Rotate">
+          <IconButton
+            size="sm"
+            onClick={onRotate}
+            aria-label="Rotate"
+            className="h-5 md:h-8"
+          >
             <IconRotate />
           </IconButton>
           <IconButton
             size="sm"
             onClick={onFlip}
             aria-label="Flip horizontal"
-            className={cn(flipH && 'text-primary')}
+            className={cn(flipH && 'text-primary', 'h-5 md:h-8')}
           >
             <IconFlip />
           </IconButton>

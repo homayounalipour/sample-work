@@ -75,7 +75,7 @@ export function IconArrowRight(props: IconProps) {
 }
 
 export function IconDownload(props: IconProps) {
-  const {className = 'h-4 w-4'} = props;
+  const {className = 'h-3 md:h-4 w-3 md:w-4'} = props;
   return (
     <svg
       className={className}
@@ -107,6 +107,25 @@ export function IconHistory(props: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  );
+}
+
+export function IconMenu(props: IconProps) {
+  const {className = 'h-5 w-5'} = props;
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 6h16M4 12h16M4 18h16"
       />
     </svg>
   );

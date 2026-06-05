@@ -61,7 +61,7 @@ export default function UploadZone(props: UploadZoneProps) {
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       className={cn(
-        'flex cursor-pointer flex-col items-center justify-center rounded-(--radius-lg) border-2 border-dashed px-6 py-12 transition-colors',
+        'flex cursor-pointer flex-col items-center justify-center rounded-(--radius-lg) border-2 border-dashed px-4 py-8 transition-colors sm:px-6 sm:py-12',
         isDragging
           ? 'border-primary bg-primary/10'
           : 'border-border-strong bg-background-subtle hover:border-primary/50 hover:bg-surface-subtle',
@@ -84,7 +84,7 @@ export default function UploadZone(props: UploadZoneProps) {
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-background-muted text-primary">
         <IconUpload />
       </div>
-      <p className="text-body-md font-medium text-text">
+      <p className="text-center text-body-md font-medium text-text">
         Drop image here or click to upload
       </p>
       <p className="mt-1 text-caption text-text-muted">

@@ -12,7 +12,7 @@ type OcrResultsPanelProps = {
 export default function OcrResultsPanel(props: OcrResultsPanelProps) {
   const {progress = 0, isLoading, blocks} = props;
   return (
-    <div className="flex min-h-0 w-70 shrink-0 flex-col rounded-(--radius-lg) border border-border bg-surface">
+    <div className="flex min-h-48 max-h-80 min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-70 xl:max-h-none xl:flex-none xl:shrink-0">
       <div className="border-b border-border px-4 py-4">
         <h2 className="text-body-md font-semibold text-text">
           OCR Results {blocks.length > 0 && `(${blocks.length})`}

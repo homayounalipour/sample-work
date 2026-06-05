@@ -36,7 +36,7 @@ export default function Modal(props: ModalProps) {
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel
           className={cn(
-            'w-full max-w-md rounded-(--radius-lg) border border-border bg-surface p-6 shadow-modal',
+            'w-full max-w-md rounded-(--radius-lg) border border-border bg-surface p-4 shadow-modal sm:p-6',
             className,
           )}
         >
@@ -46,7 +46,7 @@ export default function Modal(props: ModalProps) {
           )}
           {children && <div className="mt-4">{children}</div>}
           {(primaryAction || secondaryAction) && (
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row">
               {secondaryAction && (
                 <Button
                   variant="ghost"

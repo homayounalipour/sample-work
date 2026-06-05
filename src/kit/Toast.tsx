@@ -28,7 +28,7 @@ export default function Toast(props: ToastProps) {
     >
       <div
         className={cn(
-          'pointer-events-auto w-80 rounded-md border border-border bg-surface p-4 shadow-elevated',
+          'pointer-events-auto w-full rounded-md border border-border bg-surface p-4 shadow-elevated sm:w-80',
           toast.variant === 'success' && 'border-success/30',
         )}
       >
