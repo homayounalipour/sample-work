@@ -11,16 +11,18 @@ import {
   getTargetLanguages,
   SUPPORTED_LANGUAGES,
 } from '@/constants/languages';
+import {getOcrProvider} from '@/lib/ocr/providers';
 import {detectLanguageFromText} from '@/lib/translate/detectLanguage';
 import {translateBlocks} from '@/lib/translate/translateBlocks';
-import {runOcr} from '@/lib/ocr/runOcr';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
 import {downloadBlob} from '@/lib/image/downloadBlob';
+import {useUserSettings} from '@/hooks/useUserSettings';
 import type {OcrBlock, TranslationBlock, WorkflowStatus} from '@/types/types';
 
 const MAX_TOASTS = 4;
 
 export function useTranslationWorkflow() {
+  const {settings} = useUserSettings();
   const [status, setStatus] = useState<WorkflowStatus>('idle');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -41,6 +43,11 @@ export function useTranslationWorkflow() {
   const [flipH, setFlipH] = useState(false);
   const [zoom, setZoom] = useState(100);
   const exportedBlobRef = useRef<Blob | null>(null);
+  const sourceLangRef = useRef(sourceLang);
+
+  useEffect(() => {
+    sourceLangRef.current = sourceLang;
+  }, [sourceLang]);
 
   const setSourceLang = useCallback((lang: LanguageOption) => {
     setSourceLangState(lang);
@@ -93,19 +100,28 @@ export function useTranslationWorkflow() {
   }, [imageUrl, previewUrl]);
 
   const runOcrPipeline = useCallback(
-    async (url: string) => {
+    async (url: string, languageHint?: string) => {
       setStatus('ocr_running');
       setOcrProgress(0);
       setError(null);
+
       try {
-        const blocks = await runOcr(url, p => setOcrProgress(p.progress));
+        const provider = getOcrProvider(settings.ocrProvider);
+        const blocks = await provider.recognize(url, {
+          language: languageHint ?? sourceLangRef.current.code,
+          minConfidence: settings.ocrMinConfidence,
+          onProgress: progress => setOcrProgress(progress.progress),
+        });
+
         setOcrBlocks(blocks);
+
         if (blocks.length > 0) {
           const detected = detectLanguageFromText(
-            blocks.map(b => b.text).join(' '),
+            blocks.map(block => block.text).join(' '),
           );
           setSourceLang(getLanguageByCode(SUPPORTED_LANGUAGES, detected));
         }
+
         setStatus('ocr_done');
         addToast(
           'OCR complete',
@@ -116,7 +132,7 @@ export function useTranslationWorkflow() {
         setStatus('uploaded');
       }
     },
-    [addToast, setSourceLang],
+    [addToast, setSourceLang, settings.ocrMinConfidence, settings.ocrProvider],
   );
 
   const onFileSelect = useCallback(
@@ -148,11 +164,13 @@ export function useTranslationWorkflow() {
     if (ocrBlocks.length === 0) return;
     setStatus('translating');
     setError(null);
+
     try {
       const result = await translateBlocks(
         ocrBlocks,
         sourceLang.code,
         targetLang.code,
+        settings.translationProvider,
       );
       setTranslations(result);
       setStatus('translated');
@@ -165,12 +183,19 @@ export function useTranslationWorkflow() {
       );
       setStatus('ocr_done');
     }
-  }, [ocrBlocks, sourceLang.code, targetLang.code, addToast]);
+  }, [
+    ocrBlocks,
+    sourceLang.code,
+    targetLang.code,
+    settings.translationProvider,
+    addToast,
+  ]);
 
   const onApply = useCallback(async () => {
     if (!imageUrl || translations.length === 0) return;
     setStatus('applying');
     setError(null);
+
     try {
       const blob = await composeTranslatedImage({
         imageUrl,
@@ -192,6 +217,7 @@ export function useTranslationWorkflow() {
   const onExport = useCallback(async () => {
     setStatus('exporting');
     setError(null);
+
     try {
       let blob = exportedBlobRef.current;
       if (!blob && imageUrl) {
@@ -237,8 +263,8 @@ export function useTranslationWorkflow() {
   }, [imageUrl, previewUrl]);
 
   const retryOcr = useCallback(() => {
-    if (imageUrl) void runOcrPipeline(imageUrl);
-  }, [imageUrl, runOcrPipeline]);
+    if (imageUrl) void runOcrPipeline(imageUrl, sourceLang.code);
+  }, [imageUrl, runOcrPipeline, sourceLang.code]);
 
   const clearError = useCallback(() => setError(null), []);
 

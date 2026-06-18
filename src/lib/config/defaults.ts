@@ -1,0 +1,44 @@
+import type {OcrProviderId, TranslationProviderId} from '@/lib/providers/types';
+
+export type AppConfig = {
+  ocr: {
+    provider: OcrProviderId;
+    defaultLanguages: string;
+    minConfidence: number;
+  };
+  translation: {
+    provider: TranslationProviderId;
+    batchDelayMs: number;
+  };
+  defaults: {
+    sourceLang: string;
+    targetLang: string;
+  };
+  export: {
+    format: 'png' | 'jpeg' | 'webp';
+    quality: number;
+  };
+};
+
+export const DEFAULT_APP_CONFIG: AppConfig = {
+  ocr: {
+    provider: 'tesseract',
+    defaultLanguages: 'jpn+eng',
+    minConfidence: 0,
+  },
+  translation: {
+    provider: 'mymemory',
+    batchDelayMs: 0,
+  },
+  defaults: {
+    sourceLang: 'en',
+    targetLang: 'fa',
+  },
+  export: {
+    format: 'png',
+    quality: 1,
+  },
+};
+
+export const DEFAULT_SOURCE_CODE = DEFAULT_APP_CONFIG.defaults.sourceLang;
+export const DEFAULT_TARGET_CODE = DEFAULT_APP_CONFIG.defaults.targetLang;

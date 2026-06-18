@@ -1,4 +1,5 @@
 import type {LanguageOption} from '@/kit/LanguageSelector';
+import {DEFAULT_SOURCE_CODE, DEFAULT_TARGET_CODE} from '@/lib/config/defaults';
 import {getLanguageFlag} from '@/lib/languages/flags';
 
 const LANGUAGE_DEFS = [
@@ -99,5 +100,4 @@ export function getTargetLanguages(
   return languages.filter(language => allowed.has(language.code));
 }
 
-export const DEFAULT_SOURCE_CODE = 'en';
-export const DEFAULT_TARGET_CODE = 'fa';
+export {DEFAULT_SOURCE_CODE, DEFAULT_TARGET_CODE};

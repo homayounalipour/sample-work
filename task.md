@@ -8,6 +8,7 @@
 
 ### Phase Two
 
+- [x] Add setting & OCR Engine & Translation Engine
 - [ ] Add worker pool/reuse for Tesseract for increase speed
 - [ ] Dynamic OCR language based on sourceLang
 - [ ] Manual OCR editing before translation

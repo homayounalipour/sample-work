@@ -1,6 +1,5 @@
 import Button from '@/kit/Button';
-import LanguageSelector from '@/kit/LanguageSelector';
-import type {LanguageOption} from '@/kit/LanguageSelector';
+import LanguageSelector, {type LanguageOption} from '@/kit/LanguageSelector';
 import {getTargetLanguages} from '@/constants/languages';
 import Spinner from '@/kit/Spinner';
 import {IconArrowRight, IconSwap} from '@/kit/icons';

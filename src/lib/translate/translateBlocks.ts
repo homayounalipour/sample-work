@@ -1,10 +1,12 @@
 import {translateTexts} from '@/actions/translation';
+import type {TranslationProviderId} from '@/lib/providers/types';
 import type {OcrBlock, TranslationBlock} from '@/types/types';
 
 export async function translateBlocks(
   blocks: OcrBlock[],
   sourceCode: string,
   targetCode: string,
+  providerId?: TranslationProviderId,
 ): Promise<TranslationBlock[]> {
   const textsToTranslate: string[] = [];
   const blockIndexes: number[] = [];
@@ -25,6 +27,7 @@ export async function translateBlocks(
     textsToTranslate,
     sourceCode,
     targetCode,
+    providerId,
   );
 
   const results = blocks.map(block => ({id: block.id, text: ''}));

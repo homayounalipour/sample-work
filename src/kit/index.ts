@@ -9,6 +9,7 @@ export {default as Input} from './Input';
 export {default as LanguageSelector} from './LanguageSelector';
 export {default as Modal} from './Modal';
 export {default as ProgressBar} from './ProgressBar';
+export {default as Select, type SelectOption} from './Select';
 export {default as Spinner} from './Spinner';
 export {default as Tabs} from './Tabs';
 export {default as Toast} from './Toast';

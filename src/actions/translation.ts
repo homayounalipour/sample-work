@@ -1,11 +1,33 @@
 'use server';
 
-import {translateTexts as translateWithMyMemory} from '@/lib/translation/mymemory';
+import {getServerConfig} from '@/lib/config/server';
+import {
+  getTranslationProvider,
+  translateWithMyMemoryProvider,
+} from '@/lib/translation/providers';
+import type {TranslationProviderId} from '@/lib/providers/types';
 
 export async function translateTexts(
   texts: string[],
   source: string,
   target: string,
+  providerId?: TranslationProviderId,
 ): Promise<string[]> {
-  return translateWithMyMemory(texts, source, target);
+  const config = getServerConfig();
+  const resolvedProviderId = providerId ?? config.translation.provider;
+
+  if (resolvedProviderId === 'mymemory') {
+    return translateWithMyMemoryProvider(
+      texts,
+      source,
+      target,
+      config.translation.batchDelayMs,
+    );
+  }
+
+  return getTranslationProvider(resolvedProviderId).translate(
+    texts,
+    source,
+    target,
+  );
 }
