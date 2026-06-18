@@ -7,7 +7,6 @@ import ExportModal from './ExportModal';
 import ImageViewer from './ImageViewer';
 import NotificationHost from './NotificationHost';
 import OcrResultsPanel from './OcrResultsPanel';
-import AppShell from './AppShell';
 import TranslationHeader from './TranslationHeader';
 import TranslationPanel from './TranslationPanel';
 
@@ -17,7 +16,7 @@ export default function TranslationWorkspace() {
   const isOcrRunning = workflow.status === 'ocr_running';
 
   return (
-    <AppShell>
+    <>
       <TranslationHeader
         onExport={workflow.onExport}
         exportDisabled={!hasImage || workflow.translations.length === 0}
@@ -113,6 +112,6 @@ export default function TranslationWorkspace() {
           workflow.setExportModalOpen(false);
         }}
       />
-    </AppShell>
+    </>
   );
 }

@@ -3,9 +3,16 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import type {LanguageOption} from '@/kit/LanguageSelector';
 import type {ToastItem} from '@/kit/Toast';
-import {getLanguageByCode, LANGUAGES} from '@/constants/languages';
+import {
+  DEFAULT_SOURCE_CODE,
+  DEFAULT_TARGET_CODE,
+  getAlternateLanguage,
+  getLanguageByCode,
+  getTargetLanguages,
+  SUPPORTED_LANGUAGES,
+} from '@/constants/languages';
 import {detectLanguageFromText} from '@/lib/translate/detectLanguage';
-import {mockTranslateBlocks} from '@/lib/translate/mockTranslate';
+import {translateBlocks} from '@/lib/translate/translateBlocks';
 import {runOcr} from '@/lib/ocr/runOcr';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
 import {downloadBlob} from '@/lib/image/downloadBlob';
@@ -20,11 +27,11 @@ export function useTranslationWorkflow() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [ocrBlocks, setOcrBlocks] = useState<OcrBlock[]>([]);
   const [translations, setTranslations] = useState<TranslationBlock[]>([]);
-  const [sourceLang, setSourceLang] = useState<LanguageOption>(
-    () => LANGUAGES[1],
+  const [sourceLang, setSourceLangState] = useState<LanguageOption>(() =>
+    getLanguageByCode(SUPPORTED_LANGUAGES, DEFAULT_SOURCE_CODE),
   );
-  const [targetLang, setTargetLang] = useState<LanguageOption>(
-    () => LANGUAGES[0],
+  const [targetLang, setTargetLangState] = useState<LanguageOption>(() =>
+    getLanguageByCode(SUPPORTED_LANGUAGES, DEFAULT_TARGET_CODE),
   );
   const [ocrProgress, setOcrProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -34,6 +41,31 @@ export function useTranslationWorkflow() {
   const [flipH, setFlipH] = useState(false);
   const [zoom, setZoom] = useState(100);
   const exportedBlobRef = useRef<Blob | null>(null);
+
+  const setSourceLang = useCallback((lang: LanguageOption) => {
+    setSourceLangState(lang);
+    setTargetLangState(prev => {
+      if (prev.code === lang.code) {
+        return getAlternateLanguage(SUPPORTED_LANGUAGES, lang.code, lang);
+      }
+
+      const validTargets = getTargetLanguages(SUPPORTED_LANGUAGES, lang);
+      if (validTargets.some(target => target.code === prev.code)) {
+        return prev;
+      }
+
+      return getAlternateLanguage(SUPPORTED_LANGUAGES, lang.code, lang);
+    });
+  }, []);
+
+  const setTargetLang = useCallback((lang: LanguageOption) => {
+    setTargetLangState(lang);
+    setSourceLangState(prev =>
+      prev.code === lang.code
+        ? getAlternateLanguage(SUPPORTED_LANGUAGES, lang.code)
+        : prev,
+    );
+  }, []);
 
   const addToast = useCallback((title: string, message?: string) => {
     const id = `toast-${Date.now()}`;
@@ -72,7 +104,7 @@ export function useTranslationWorkflow() {
           const detected = detectLanguageFromText(
             blocks.map(b => b.text).join(' '),
           );
-          setSourceLang(getLanguageByCode(detected));
+          setSourceLang(getLanguageByCode(SUPPORTED_LANGUAGES, detected));
         }
         setStatus('ocr_done');
         addToast(
@@ -84,7 +116,7 @@ export function useTranslationWorkflow() {
         setStatus('uploaded');
       }
     },
-    [addToast],
+    [addToast, setSourceLang],
   );
 
   const onFileSelect = useCallback(
@@ -117,15 +149,23 @@ export function useTranslationWorkflow() {
     setStatus('translating');
     setError(null);
     try {
-      const result = await mockTranslateBlocks(ocrBlocks, targetLang.code);
+      const result = await translateBlocks(
+        ocrBlocks,
+        sourceLang.code,
+        targetLang.code,
+      );
       setTranslations(result);
       setStatus('translated');
       addToast('Translation completed', `${result.length} blocks translated.`);
-    } catch {
-      setError('Translation failed. Please try again.');
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : 'Translation failed. Please try again.',
+      );
       setStatus('ocr_done');
     }
-  }, [ocrBlocks, targetLang.code, addToast]);
+  }, [ocrBlocks, sourceLang.code, targetLang.code, addToast]);
 
   const onApply = useCallback(async () => {
     if (!imageUrl || translations.length === 0) return;
@@ -174,8 +214,14 @@ export function useTranslationWorkflow() {
   }, [imageUrl, ocrBlocks, translations, addToast]);
 
   const swapLanguages = useCallback(() => {
-    setSourceLang(targetLang);
-    setTargetLang(sourceLang);
+    const nextSource = targetLang;
+    const validTargets = getTargetLanguages(SUPPORTED_LANGUAGES, nextSource);
+    const nextTarget =
+      validTargets.find(language => language.code === sourceLang.code) ??
+      getAlternateLanguage(SUPPORTED_LANGUAGES, nextSource.code, nextSource);
+
+    setSourceLangState(nextSource);
+    setTargetLangState(nextTarget);
   }, [sourceLang, targetLang]);
 
   const replaceImage = useCallback(() => {
@@ -229,6 +275,6 @@ export function useTranslationWorkflow() {
     retryOcr,
     clearError,
     dismissToast,
-    languages: LANGUAGES,
+    languages: SUPPORTED_LANGUAGES,
   };
 }

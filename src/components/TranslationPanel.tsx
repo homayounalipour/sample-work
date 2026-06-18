@@ -1,5 +1,7 @@
 import Button from '@/kit/Button';
-import LanguageSelector, {LanguageOption} from '@/kit/LanguageSelector';
+import LanguageSelector from '@/kit/LanguageSelector';
+import type {LanguageOption} from '@/kit/LanguageSelector';
+import {getTargetLanguages} from '@/constants/languages';
 import Spinner from '@/kit/Spinner';
 import {IconArrowRight, IconSwap} from '@/kit/icons';
 import IconButton from '@/kit/IconButton';
@@ -38,14 +40,19 @@ export default function TranslationPanel(props: TranslationPanelProps) {
     sourceLang,
   } = props;
 
-  const disableLang = sourceLang === targetLang;
+  const sourceOptions = languages.filter(
+    language => language.code !== targetLang.code,
+  );
+  const targetOptions = getTargetLanguages(languages, sourceLang).filter(
+    language => language.code !== sourceLang.code,
+  );
   return (
     <div className="flex min-h-56 max-h-96 min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-80 xl:max-h-none xl:flex-none xl:shrink-0">
       <div className="border-b border-border px-4 py-3 sm:py-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <LanguageSelector
             value={sourceLang}
-            options={languages}
+            options={sourceOptions}
             onChange={onSourceChange}
             className="flex-1"
           />
@@ -59,7 +66,7 @@ export default function TranslationPanel(props: TranslationPanelProps) {
           </IconButton>
           <LanguageSelector
             value={targetLang}
-            options={languages}
+            options={targetOptions}
             onChange={onTargetChange}
             className="flex-1"
           />
@@ -93,7 +100,7 @@ export default function TranslationPanel(props: TranslationPanelProps) {
           variant="secondary"
           fullWidth
           onClick={onTranslate}
-          disabled={translateDisabled || disableLang}
+          disabled={translateDisabled}
           isLoading={isTranslating}
           rightIcon={<IconArrowRight />}
         >

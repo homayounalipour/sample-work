@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import {Vazirmatn} from 'next/font/google';
+import AppShellLayout from '@/components/AppShellLayout';
 import '@/styles/globals.css';
 import React from 'react';
 
@@ -25,7 +26,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-background text-text">
-        {children}
+        <AppShellLayout>{children}</AppShellLayout>
       </body>
     </html>
   );

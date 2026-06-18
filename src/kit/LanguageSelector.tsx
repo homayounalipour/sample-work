@@ -10,7 +10,8 @@ import {IconChevronDown} from './icons';
 export type LanguageOption = {
   code: string;
   name: string;
-  flag: string;
+  flag?: string;
+  targets?: string[];
 };
 
 type LanguageSelectorProps = {

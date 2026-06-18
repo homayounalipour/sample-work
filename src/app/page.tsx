@@ -1,5 +1,5 @@
-import TranslationWorkspace from '@/components/TranslationWorkspace';
-
-export default function Home() {
-  return <TranslationWorkspace />;
-}
+// import {redirect} from 'next/navigation';
+//
+// export default function Home() {
+//   redirect('/new');
+// }
