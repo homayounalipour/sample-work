@@ -20,7 +20,7 @@ export default function IconButton(props: IconButtonProps) {
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-primary',
+        'inline-flex cursor-pointer items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-primary',
         size === 'sm' ? 'h-8 w-8' : 'h-10 w-10',
         variant === 'default'
           ? 'bg-background-muted border border-border text-text-subtle hover:bg-surface-subtle hover:text-text'

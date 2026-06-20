@@ -1,9 +1,12 @@
+'use client';
+
 import Button from '@/kit/Button';
 import LanguageSelector, {type LanguageOption} from '@/kit/LanguageSelector';
 import {getTargetLanguages} from '@/constants/languages';
 import Spinner from '@/kit/Spinner';
-import {IconArrowRight, IconSwap} from '@/kit/icons';
+import {IconArrowRight, IconCheck, IconCopy, IconSwap} from '@/kit/icons';
 import IconButton from '@/kit/IconButton';
+import {useCopyBlockTexts} from '@/hooks/useCopyBlockTexts';
 import type {TranslationBlock} from '@/types/types';
 
 type TranslationPanelProps = {
@@ -39,6 +42,8 @@ export default function TranslationPanel(props: TranslationPanelProps) {
     sourceLang,
   } = props;
 
+  const {copied, onCopy} = useCopyBlockTexts(translations);
+
   const sourceOptions = languages.filter(
     language => language.code !== targetLang.code,
   );
@@ -70,6 +75,20 @@ export default function TranslationPanel(props: TranslationPanelProps) {
             className="flex-1"
           />
         </div>
+      </div>
+
+      <div className="flex items-center justify-between border-b border-border px-4 py-2">
+        <h3 className="text-caption font-medium text-text-muted">
+          Translated text
+        </h3>
+        <IconButton
+          size="sm"
+          aria-label="Copy translation text"
+          disabled={isTranslating || translations.length === 0}
+          onClick={onCopy}
+        >
+          {copied ? <IconCheck /> : <IconCopy />}
+        </IconButton>
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-4">
