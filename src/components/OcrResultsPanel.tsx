@@ -7,10 +7,11 @@ type OcrResultsPanelProps = {
   blocks: OcrBlock[];
   isLoading?: boolean;
   progress?: number;
+  hasImage?: boolean;
 };
 
 export default function OcrResultsPanel(props: OcrResultsPanelProps) {
-  const {progress = 0, isLoading, blocks} = props;
+  const {progress = 0, isLoading, blocks, hasImage = false} = props;
   return (
     <div className="flex min-h-48 max-h-80 min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-70 xl:max-h-none xl:flex-none xl:shrink-0">
       <div className="border-b border-border px-4 py-4">
@@ -28,7 +29,9 @@ export default function OcrResultsPanel(props: OcrResultsPanelProps) {
           </div>
         ) : blocks.length === 0 ? (
           <p className="py-8 text-center text-caption text-text-muted">
-            Upload an image to extract text.
+            {hasImage
+              ? 'No readable text was detected in this image.'
+              : 'Upload an image to extract text.'}
           </p>
         ) : (
           blocks.map(block => (

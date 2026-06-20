@@ -11,7 +11,7 @@ import {
   getTargetLanguages,
   SUPPORTED_LANGUAGES,
 } from '@/constants/languages';
-import {getOcrProvider} from '@/lib/ocr/providers';
+import {runOcrJob} from '@/lib/ocr/runOcr';
 import {detectLanguageFromText} from '@/lib/translate/detectLanguage';
 import {translateBlocks} from '@/lib/translate/translateBlocks';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
@@ -106,11 +106,15 @@ export function useTranslationWorkflow() {
       setError(null);
 
       try {
-        const provider = getOcrProvider(settings.ocrProvider);
-        const blocks = await provider.recognize(url, {
-          language: languageHint ?? sourceLangRef.current.code,
-          minConfidence: settings.ocrMinConfidence,
-          onProgress: progress => setOcrProgress(progress.progress),
+        const blocks = await runOcrJob({
+          id: 'single',
+          imageSource: url,
+          providerId: settings.ocrProvider,
+          options: {
+            language: languageHint ?? sourceLangRef.current.code,
+            minConfidence: settings.ocrMinConfidence,
+            onProgress: progress => setOcrProgress(progress.progress),
+          },
         });
 
         setOcrBlocks(blocks);
@@ -120,13 +124,15 @@ export function useTranslationWorkflow() {
             blocks.map(block => block.text).join(' '),
           );
           setSourceLang(getLanguageByCode(SUPPORTED_LANGUAGES, detected));
+          addToast(
+            'OCR complete',
+            `Found ${blocks.length} text block${blocks.length === 1 ? '' : 's'}.`,
+          );
+        } else {
+          addToast('No text found', 'No readable text was detected in this image.');
         }
 
         setStatus('ocr_done');
-        addToast(
-          'OCR complete',
-          `Found ${blocks.length} text block${blocks.length === 1 ? '' : 's'}.`,
-        );
       } catch {
         setError('OCR failed. Please try another image or retry.');
         setStatus('uploaded');

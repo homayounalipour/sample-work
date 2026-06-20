@@ -1,20 +1,13 @@
 import type {OcrBlock} from '@/types/types';
 import {DEFAULT_APP_CONFIG} from '@/lib/config/defaults';
+import {preprocessImageForOcr} from '@/lib/image/preprocessImageForOcr';
+import {consolidateOcrBlocks} from '@/lib/ocr/consolidateOcrBlocks';
+import {filterOcrBlocks} from '@/lib/ocr/filterOcrBlocks';
+import {mergeOcrBlocks} from '@/lib/ocr/mergeOcrBlocks';
+import {parseTesseractPage} from '@/lib/ocr/parseTesseractPage';
+import {verifyOcrBlocks} from '@/lib/ocr/verifyOcrBlocks';
 import type {OcrProvider, OcrRecognizeOptions} from '@/lib/providers/types';
-
-type TesseractLine = {
-  text: string;
-  confidence: number;
-  bbox: {x0: number; y0: number; x1: number; y1: number};
-};
-
-type TesseractPage = {
-  blocks: Array<{
-    paragraphs: Array<{
-      lines: TesseractLine[];
-    }>;
-  }> | null;
-};
+import {recognizeWithPool} from '@/lib/ocr/providers/tesseractPool';
 
 const LANGUAGE_TO_TESSERACT: Record<string, string> = {
   en: 'eng',
@@ -35,38 +28,7 @@ const LANGUAGE_TO_TESSERACT: Record<string, string> = {
   pl: 'pol',
 };
 
-function linesFromPage(page: TesseractPage): TesseractLine[] {
-  const lines: TesseractLine[] = [];
-  if (!page.blocks) return lines;
-
-  for (const block of page.blocks) {
-    for (const paragraph of block.paragraphs ?? []) {
-      for (const line of paragraph.lines ?? []) {
-        if (line.text?.trim()) lines.push(line);
-      }
-    }
-  }
-
-  return lines;
-}
-
-function lineToBlock(line: TesseractLine, index: number): OcrBlock {
-  const box = line.bbox;
-
-  return {
-    id: `line-${index}`,
-    text: line.text.trim(),
-    bbox: {
-      x: box.x0,
-      y: box.y0,
-      width: box.x1 - box.x0,
-      height: box.y1 - box.y0,
-    },
-    confidence: line.confidence ?? 0,
-  };
-}
-
-function resolveTesseractLanguages(language?: string): string {
+export function resolveTesseractLanguages(language?: string): string {
   if (!language?.trim()) {
     return DEFAULT_APP_CONFIG.ocr.defaultLanguages;
   }
@@ -79,62 +41,28 @@ function resolveTesseractLanguages(language?: string): string {
   return mapped === 'eng' ? 'eng' : `${mapped}+eng`;
 }
 
-function filterByConfidence(
-  blocks: OcrBlock[],
+function processOcrResult(
+  data: unknown,
   minConfidence: number,
 ): OcrBlock[] {
-  if (minConfidence <= 0) return blocks;
-  return blocks.filter(block => block.confidence >= minConfidence);
+  const parsed = parseTesseractPage(data);
+  const filtered = filterOcrBlocks(parsed, minConfidence);
+  const merged = mergeOcrBlocks(filtered);
+  const consolidated = consolidateOcrBlocks(merged);
+  return verifyOcrBlocks(consolidated);
 }
 
 async function recognizeWithTesseract(
   imageSource: string | File | Blob,
   options?: OcrRecognizeOptions,
 ): Promise<OcrBlock[]> {
-  const {createWorker} = await import('tesseract.js');
   const languages = resolveTesseractLanguages(options?.language);
+  const minConfidence = options?.minConfidence ?? 0;
 
-  const worker = await createWorker(languages, 1, {
-    logger: message => {
-      if (message.status === 'recognizing text') {
-        options?.onProgress?.({
-          status: message.status,
-          progress: Math.round((message.progress ?? 0) * 100),
-        });
-      }
-    },
-  });
+  const preprocessed = await preprocessImageForOcr(imageSource);
+  const data = await recognizeWithPool(preprocessed, languages, options);
 
-  try {
-    const {data} = await worker.recognize(
-      imageSource,
-      {},
-      {blocks: true, text: true},
-    );
-    const page = data as unknown as TesseractPage;
-    const lines = linesFromPage(page);
-    const minConfidence = options?.minConfidence ?? 0;
-
-    if (lines.length > 0) {
-      return filterByConfidence(lines.map(lineToBlock), minConfidence);
-    }
-
-    const text = (data as {text?: string}).text?.trim();
-    if (text) {
-      const block: OcrBlock = {
-        id: 'full-text',
-        text,
-        bbox: {x: 24, y: 24, width: 200, height: 40},
-        confidence: (data as {confidence?: number}).confidence ?? 0,
-      };
-
-      return filterByConfidence([block], minConfidence);
-    }
-
-    return [];
-  } finally {
-    await worker.terminate();
-  }
+  return processOcrResult(data, minConfidence);
 }
 
 export const tesseractProvider: OcrProvider = {

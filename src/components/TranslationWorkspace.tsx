@@ -74,6 +74,7 @@ export default function TranslationWorkspace() {
                 blocks={workflow.ocrBlocks}
                 isLoading={isOcrRunning}
                 progress={workflow.ocrProgress}
+                hasImage={hasImage}
               />
               <TranslationPanel
                 sourceLang={workflow.sourceLang}

@@ -25,6 +25,8 @@ export function getServerConfig(): AppConfig {
         process.env.OCR_MIN_CONFIDENCE,
         DEFAULT_APP_CONFIG.ocr.minConfidence,
       ),
+      maxImageDimension: DEFAULT_APP_CONFIG.ocr.maxImageDimension,
+      verify: DEFAULT_APP_CONFIG.ocr.verify,
     },
     translation: {
       provider: parseEnumValue(

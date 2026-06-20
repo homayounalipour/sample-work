@@ -5,6 +5,12 @@ export type AppConfig = {
     provider: OcrProviderId;
     defaultLanguages: string;
     minConfidence: number;
+    maxImageDimension: number;
+    verify: {
+      minTotalChars: number;
+      minAvgConfidence: number;
+      minAlphanumericRatio: number;
+    };
   };
   translation: {
     provider: TranslationProviderId;
@@ -25,6 +31,12 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
     provider: 'tesseract',
     defaultLanguages: 'jpn+eng',
     minConfidence: 0,
+    maxImageDimension: 2400,
+    verify: {
+      minTotalChars: 3,
+      minAvgConfidence: 25,
+      minAlphanumericRatio: 0.3,
+    },
   },
   translation: {
     provider: 'mymemory',
