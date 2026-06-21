@@ -21,7 +21,7 @@ export type AppConfig = {
     targetLang: string;
   };
   export: {
-    format: 'png' | 'jpeg' | 'webp';
+    format: 'png' | 'jpeg' | 'pdf';
     quality: number;
   };
 };
@@ -48,7 +48,7 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
   },
   export: {
     format: 'png',
-    quality: 1,
+    quality: 0.92,
   },
 };
 

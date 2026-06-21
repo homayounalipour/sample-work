@@ -1,9 +1,18 @@
+import {DEFAULT_APP_CONFIG} from '@/lib/config/defaults';
 import type {OcrBlock, TranslationBlock} from '@/types/types';
+import {canvasToPdfBlob} from '@/lib/image/canvasToPdfBlob';
+import {
+  getExportMimeType,
+  isLossyFormat,
+  type ExportFormat,
+} from '@/lib/image/exportFormat';
 
 type ComposeOptions = {
   imageUrl: string;
   blocks: OcrBlock[];
   translations: TranslationBlock[];
+  format?: ExportFormat;
+  quality?: number;
 };
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -16,11 +25,11 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-export async function composeTranslatedImage({
+async function renderTranslatedCanvas({
   imageUrl,
   blocks,
   translations,
-}: ComposeOptions): Promise<Blob> {
+}: Omit<ComposeOptions, 'format' | 'quality'>): Promise<HTMLCanvasElement> {
   const image = await loadImage(imageUrl);
   const translationMap = new Map(translations.map(t => [t.id, t.text]));
 
@@ -65,12 +74,38 @@ export async function composeTranslatedImage({
     ctx.fillText(displayText, x + padding, y + h / 2, maxWidth);
   }
 
+  return canvas;
+}
+
+function canvasToBlob(
+  canvas: HTMLCanvasElement,
+  format: ExportFormat,
+  quality: number,
+): Promise<Blob> {
+  if (format === 'pdf') {
+    return canvasToPdfBlob(canvas, quality);
+  }
+
+  const mimeType = getExportMimeType(format);
+  const blobQuality = isLossyFormat(format) ? quality : 1;
+
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       blob =>
         blob ? resolve(blob) : reject(new Error('Failed to export image')),
-      'image/png',
-      1,
+      mimeType,
+      blobQuality,
     );
   });
+}
+
+export async function composeTranslatedImage({
+  imageUrl,
+  blocks,
+  translations,
+  format = DEFAULT_APP_CONFIG.export.format,
+  quality = DEFAULT_APP_CONFIG.export.quality,
+}: ComposeOptions): Promise<Blob> {
+  const canvas = await renderTranslatedCanvas({imageUrl, blocks, translations});
+  return canvasToBlob(canvas, format, quality);
 }

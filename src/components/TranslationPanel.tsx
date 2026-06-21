@@ -1,5 +1,3 @@
-'use client';
-
 import Button from '@/kit/Button';
 import LanguageSelector, {type LanguageOption} from '@/kit/LanguageSelector';
 import {getTargetLanguages} from '@/constants/languages';

@@ -16,6 +16,11 @@ import {detectLanguageFromText} from '@/lib/translate/detectLanguage';
 import {translateBlocks} from '@/lib/translate/translateBlocks';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
 import {downloadBlob} from '@/lib/image/downloadBlob';
+import {
+  getExportFilename,
+  type ExportFormat,
+} from '@/lib/image/exportFormat';
+import {DEFAULT_APP_CONFIG} from '@/lib/config/defaults';
 import {useUserSettings} from '@/hooks/useUserSettings';
 import type {OcrBlock, TranslationBlock, WorkflowStatus} from '@/types/types';
 
@@ -42,7 +47,10 @@ export function useTranslationWorkflow() {
   const [rotation, setRotation] = useState(0);
   const [flipH, setFlipH] = useState(false);
   const [zoom, setZoom] = useState(100);
+  const [exportFormat, setExportFormat] = useState<ExportFormat>('png');
+  const [lastExportedUrl, setLastExportedUrl] = useState<string | null>(null);
   const exportedBlobRef = useRef<Blob | null>(null);
+  const lastExportedUrlRef = useRef<string | null>(null);
   const sourceLangRef = useRef(sourceLang);
 
   useEffect(() => {
@@ -96,6 +104,9 @@ export function useTranslationWorkflow() {
       if (imageUrl) URL.revokeObjectURL(imageUrl);
       if (previewUrl && previewUrl !== imageUrl)
         URL.revokeObjectURL(previewUrl);
+      if (lastExportedUrlRef.current) {
+        URL.revokeObjectURL(lastExportedUrlRef.current);
+      }
     };
   }, [imageUrl, previewUrl]);
 
@@ -225,25 +236,49 @@ export function useTranslationWorkflow() {
     setError(null);
 
     try {
-      let blob = exportedBlobRef.current;
-      if (!blob && imageUrl) {
+      let blob: Blob | null = null;
+
+      if (exportFormat === 'png' && exportedBlobRef.current) {
+        blob = exportedBlobRef.current;
+      } else if (imageUrl) {
         blob = await composeTranslatedImage({
           imageUrl,
           blocks: ocrBlocks,
           translations,
+          format: exportFormat,
+          quality: DEFAULT_APP_CONFIG.export.quality,
         });
-        exportedBlobRef.current = blob;
+        if (exportFormat === 'png') {
+          exportedBlobRef.current = blob;
+        }
       }
+
       if (!blob) throw new Error('Nothing to export');
-      downloadBlob(blob, 'translated-image.png');
+
+      downloadBlob(blob, getExportFilename(exportFormat));
+
+      if (lastExportedUrlRef.current) {
+        URL.revokeObjectURL(lastExportedUrlRef.current);
+      }
+      const exportedUrl = URL.createObjectURL(blob);
+      lastExportedUrlRef.current = exportedUrl;
+      setLastExportedUrl(exportedUrl);
+
       setExportModalOpen(true);
       setStatus('done');
-      addToast('Export complete', 'Your translated image was downloaded.');
+      addToast('Export complete', 'Your translated file was downloaded.');
     } catch {
-      setError('Export failed. Apply translation first.');
-      setStatus('applied');
+      setError('Export failed. Translate your image first.');
+      setStatus(previewUrl ? 'applied' : 'translated');
     }
-  }, [imageUrl, ocrBlocks, translations, addToast]);
+  }, [
+    imageUrl,
+    ocrBlocks,
+    translations,
+    exportFormat,
+    previewUrl,
+    addToast,
+  ]);
 
   const swapLanguages = useCallback(() => {
     const nextSource = targetLang;
@@ -266,6 +301,11 @@ export function useTranslationWorkflow() {
     setOcrBlocks([]);
     setTranslations([]);
     exportedBlobRef.current = null;
+    if (lastExportedUrlRef.current) {
+      URL.revokeObjectURL(lastExportedUrlRef.current);
+      lastExportedUrlRef.current = null;
+    }
+    setLastExportedUrl(null);
   }, [imageUrl, previewUrl]);
 
   const retryOcr = useCallback(() => {
@@ -290,6 +330,9 @@ export function useTranslationWorkflow() {
     error,
     exportModalOpen,
     setExportModalOpen,
+    exportFormat,
+    setExportFormat,
+    lastExportedUrl,
     toasts,
     rotation,
     flipH,
