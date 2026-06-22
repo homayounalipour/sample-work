@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import {forwardRef} from 'react';
-import Avatar from '@/kit/Avatar';
 import ProgressBar from '@/kit/ProgressBar';
 import {IconLogo} from '@/kit/icons';
 import {NAV_ITEMS} from '@/constants/navigation';
+import SidebarUserSection from '@/components/SidebarUserSection';
 import cn from '@/utils/mergeClassNameTailwind';
 
 type SidebarProps = {
@@ -60,17 +60,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
 
         <div className="mt-auto space-y-4 px-2">
           <ProgressBar value={6.5} max={10} showLabel label="Storage" />
-          <div className="flex items-center gap-3 rounded-md border border-border bg-surface p-3">
-            <Avatar name="John Doe" size="md" />
-            <div className="min-w-0">
-              <p className="truncate text-body-md font-medium text-text">
-                John Doe
-              </p>
-              <p className="truncate text-caption text-text-muted">
-                john@example.com
-              </p>
-            </div>
-          </div>
+          <SidebarUserSection />
         </div>
       </aside>
     );

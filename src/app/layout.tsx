@@ -1,8 +1,8 @@
 import type {Metadata} from 'next';
 import {Vazirmatn} from 'next/font/google';
-import AppShellLayout from '@/components/AppShellLayout';
 import '@/styles/globals.css';
 import React from 'react';
+import Providers from '@/providers/Providers';
 
 const vazirmatn = Vazirmatn({
   variable: '--font-vazirmatn',
@@ -26,7 +26,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-background text-text">
-        <AppShellLayout>{children}</AppShellLayout>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

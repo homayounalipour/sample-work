@@ -32,7 +32,7 @@ export default function Avatar(props: AvatarProps) {
   return (
     <div
       className={cn(
-        'flex items-center justify-center rounded-full bg-primary/30 text-caption font-medium text-primary',
+        'flex items-center justify-center pt-1 rounded-full bg-primary/30 text-caption font-medium text-primary',
         sizeMap[size],
         className,
       )}
