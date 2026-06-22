@@ -51,5 +51,6 @@ export function getServerConfig(): AppConfig {
       format: DEFAULT_APP_CONFIG.export.format,
       quality: DEFAULT_APP_CONFIG.export.quality,
     },
+    history: DEFAULT_APP_CONFIG.history,
   };
 }

@@ -290,3 +290,60 @@ export function IconFlip(props: IconProps) {
     </svg>
   );
 }
+
+export function IconStar(props: IconProps & {filled?: boolean}) {
+  const {className = 'h-4 w-4', filled = false} = props;
+  return (
+    <svg
+      className={className}
+      fill={filled ? 'currentColor' : 'none'}
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M11.48 3.499a1.5 1.5 0 013.04 0l1.518 4.674a1.5 1.5 0 001.465 1.037h4.908a1.5 1.5 0 01.832 2.715l-3.968 2.883a1.5 1.5 0 00-.544 1.674l1.518 4.674a1.5 1.5 0 01-2.316 1.674l-3.968-2.883a1.5 1.5 0 00-1.76 0l-3.968 2.883a1.5 1.5 0 01-2.316-1.674l1.518-4.674a1.5 1.5 0 00-.544-1.674L2.342 11.925a1.5 1.5 0 01.832-2.715h4.908a1.5 1.5 0 001.465-1.037L11.48 3.499z"
+      />
+    </svg>
+  );
+}
+
+export function IconTrash(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+      />
+    </svg>
+  );
+}
+
+export function IconDotsVertical(props: IconProps) {
+  const {className = 'h-4 w-4'} = props;
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 5v.01M12 12v.01M12 19v.01"
+      />
+    </svg>
+  );
+}

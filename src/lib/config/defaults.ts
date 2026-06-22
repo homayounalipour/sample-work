@@ -24,6 +24,12 @@ export type AppConfig = {
     format: 'png' | 'jpeg' | 'pdf';
     quality: number;
   };
+  history: {
+    maxEntries: number;
+    thumbnailMaxWidth: number;
+    thumbnailMaxDpr: number;
+    thumbnailQuality: number;
+  };
 };
 
 export const DEFAULT_APP_CONFIG: AppConfig = {
@@ -49,6 +55,12 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
   export: {
     format: 'png',
     quality: 0.92,
+  },
+  history: {
+    maxEntries: 50,
+    thumbnailMaxWidth: 480,
+    thumbnailMaxDpr: 2,
+    thumbnailQuality: 0.92,
   },
 };
 

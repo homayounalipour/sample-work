@@ -40,7 +40,7 @@ export default function TranslationHeader(props: TranslationHeaderProps) {
       <div className="flex shrink-0 items-center justify-end gap-2 self-end sm:gap-3 lg:self-auto">
         <IconButton
           aria-label="History"
-          onClick={() => router.push(routes.app.settings)}
+          onClick={() => router.push(routes.app.history)}
         >
           <IconHistory />
         </IconButton>

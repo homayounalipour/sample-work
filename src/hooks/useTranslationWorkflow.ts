@@ -16,12 +16,10 @@ import {detectLanguageFromText} from '@/lib/translate/detectLanguage';
 import {translateBlocks} from '@/lib/translate/translateBlocks';
 import {composeTranslatedImage} from '@/lib/image/composeTranslatedImage';
 import {downloadBlob} from '@/lib/image/downloadBlob';
-import {
-  getExportFilename,
-  type ExportFormat,
-} from '@/lib/image/exportFormat';
+import {getExportFilename, type ExportFormat} from '@/lib/image/exportFormat';
 import {DEFAULT_APP_CONFIG} from '@/lib/config/defaults';
 import {useUserSettings} from '@/hooks/useUserSettings';
+import {saveHistoryEntry} from '@/lib/history/translationHistoryStore';
 import type {OcrBlock, TranslationBlock, WorkflowStatus} from '@/types/types';
 
 const MAX_TOASTS = 4;
@@ -52,6 +50,7 @@ export function useTranslationWorkflow() {
   const exportedBlobRef = useRef<Blob | null>(null);
   const lastExportedUrlRef = useRef<string | null>(null);
   const sourceLangRef = useRef(sourceLang);
+  const historyEntryIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     sourceLangRef.current = sourceLang;
@@ -99,6 +98,41 @@ export function useTranslationWorkflow() {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
+  const persistToHistory = useCallback(
+    async (translatedBlob: Blob) => {
+      if (translations.length === 0) return;
+
+      try {
+        const id = historyEntryIdRef.current ?? crypto.randomUUID();
+        await saveHistoryEntry({
+          id,
+          originalFile: imageFile,
+          translatedBlob,
+          ocrBlocks,
+          translations,
+          sourceLangCode: sourceLang.code,
+          targetLangCode: targetLang.code,
+          originalFileName: imageFile?.name ?? 'image',
+        });
+        historyEntryIdRef.current = id;
+        addToast('Saved to history', 'Your translation was added to history.');
+      } catch {
+        addToast(
+          'History save failed',
+          'Could not save this translation. Storage may be full.',
+        );
+      }
+    },
+    [
+      addToast,
+      imageFile,
+      ocrBlocks,
+      translations,
+      sourceLang.code,
+      targetLang.code,
+    ],
+  );
+
   useEffect(() => {
     return () => {
       if (imageUrl) URL.revokeObjectURL(imageUrl);
@@ -140,7 +174,10 @@ export function useTranslationWorkflow() {
             `Found ${blocks.length} text block${blocks.length === 1 ? '' : 's'}.`,
           );
         } else {
-          addToast('No text found', 'No readable text was detected in this image.');
+          addToast(
+            'No text found',
+            'No readable text was detected in this image.',
+          );
         }
 
         setStatus('ocr_done');
@@ -162,6 +199,7 @@ export function useTranslationWorkflow() {
       setPreviewUrl(null);
       setOcrBlocks([]);
       setTranslations([]);
+      historyEntryIdRef.current = null;
       setRotation(0);
       setFlipH(false);
       setZoom(100);
@@ -225,11 +263,19 @@ export function useTranslationWorkflow() {
       exportedBlobRef.current = blob;
       setStatus('applied');
       addToast('Translation applied', 'Preview updated with overlay text.');
+      void persistToHistory(blob);
     } catch {
       setError('Failed to apply translation on image.');
       setStatus('translated');
     }
-  }, [imageUrl, previewUrl, ocrBlocks, translations, addToast]);
+  }, [
+    imageUrl,
+    previewUrl,
+    ocrBlocks,
+    translations,
+    addToast,
+    persistToHistory,
+  ]);
 
   const onExport = useCallback(async () => {
     setStatus('exporting');
@@ -267,6 +313,7 @@ export function useTranslationWorkflow() {
       setExportModalOpen(true);
       setStatus('done');
       addToast('Export complete', 'Your translated file was downloaded.');
+      void persistToHistory(blob);
     } catch {
       setError('Export failed. Translate your image first.');
       setStatus(previewUrl ? 'applied' : 'translated');
@@ -278,6 +325,7 @@ export function useTranslationWorkflow() {
     exportFormat,
     previewUrl,
     addToast,
+    persistToHistory,
   ]);
 
   const swapLanguages = useCallback(() => {
@@ -300,6 +348,7 @@ export function useTranslationWorkflow() {
     setPreviewUrl(null);
     setOcrBlocks([]);
     setTranslations([]);
+    historyEntryIdRef.current = null;
     exportedBlobRef.current = null;
     if (lastExportedUrlRef.current) {
       URL.revokeObjectURL(lastExportedUrlRef.current);

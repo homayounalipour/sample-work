@@ -1,10 +1,5 @@
-import PlaceholderPage from '@/components/PlaceholderPage';
+import HistoryPageContent from '@/components/HistoryPageContent';
 
 export default function HistoryPage() {
-  return (
-    <PlaceholderPage
-      title="History"
-      description="Browse your previous translations."
-    />
-  );
+  return <HistoryPageContent />;
 }
