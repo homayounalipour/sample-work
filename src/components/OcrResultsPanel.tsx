@@ -28,6 +28,7 @@ export default function OcrResultsPanel(props: OcrResultsPanelProps) {
           aria-label="Copy OCR text"
           disabled={isLoading || blocks.length === 0}
           onClick={onCopy}
+          className="h-6 w-6"
         >
           {copied ? <IconCheck /> : <IconCopy />}
         </IconButton>

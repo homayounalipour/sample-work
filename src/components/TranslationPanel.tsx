@@ -49,7 +49,7 @@ export default function TranslationPanel(props: TranslationPanelProps) {
     language => language.code !== sourceLang.code,
   );
   return (
-    <div className="flex min-h-56 max-h-96 min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-80 xl:max-h-none xl:flex-none xl:shrink-0">
+    <div className="flex min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-80 xl:max-h-none xl:flex-none xl:shrink-0">
       <div className="border-b border-border px-4 py-3 sm:py-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <LanguageSelector
@@ -84,6 +84,7 @@ export default function TranslationPanel(props: TranslationPanelProps) {
           aria-label="Copy translation text"
           disabled={isTranslating || translations.length === 0}
           onClick={onCopy}
+          className="h-6 w-6"
         >
           {copied ? <IconCheck /> : <IconCopy />}
         </IconButton>
