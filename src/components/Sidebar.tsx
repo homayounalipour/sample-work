@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {forwardRef} from 'react';
 import ProgressBar from '@/kit/ProgressBar';
-import {IconLogo} from '@/kit/icons';
 import {NAV_ITEMS} from '@/constants/navigation';
 import SidebarUserSection from '@/components/SidebarUserSection';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -26,7 +25,13 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
       >
         <div className="mb-8 flex items-center justify-between gap-3 px-2">
           <div className="flex items-center gap-3">
-            <IconLogo />
+            <img
+              src="/favicon.ico"
+              alt="ImageTranslate logo"
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0 rounded-md"
+            />
             <div>
               <p className="text-body-md font-semibold text-text">
                 ImageTranslate

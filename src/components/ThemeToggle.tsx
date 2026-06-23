@@ -16,6 +16,7 @@ export default function ThemeToggle() {
       variant="ghost"
       size="sm"
       onClick={toggleTheme}
+      className="w-4 h-4"
       aria-label={
         resolvedTheme === 'dark'
           ? 'Switch to light mode'
