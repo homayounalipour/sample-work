@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import HistoryDetailModal from '@/components/HistoryDetailModal';
 import HistoryItemCard from '@/components/HistoryItemCard';
@@ -24,6 +24,19 @@ export default function HistoryList(props: HistoryListProps) {
   } = props;
   const [selectedRecord, setSelectedRecord] =
     useState<TranslationHistoryRecord | null>(null);
+
+  useEffect(() => {
+    if (
+      selectedRecord &&
+      !records.some(record => record.id === selectedRecord.id)
+    ) {
+      setSelectedRecord(null);
+    }
+  }, [records, selectedRecord]);
+
+  const liveRecord = selectedRecord
+    ? (records.find(record => record.id === selectedRecord.id) ?? null)
+    : null;
 
   if (records.length === 0) {
     return (
@@ -54,8 +67,8 @@ export default function HistoryList(props: HistoryListProps) {
       </div>
 
       <HistoryDetailModal
-        record={selectedRecord}
-        open={selectedRecord !== null}
+        record={liveRecord}
+        open={liveRecord !== null}
         onClose={() => setSelectedRecord(null)}
         onToggleFavorite={onToggleFavorite}
       />
