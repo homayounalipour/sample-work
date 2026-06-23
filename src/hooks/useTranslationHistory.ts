@@ -1,6 +1,7 @@
 'use client';
 
 import {useCallback, useSyncExternalStore} from 'react';
+import {useAuth} from '@/contexts/AuthContext';
 import {
   deleteHistoryEntry,
   getFavoriteRecords,
@@ -12,9 +13,17 @@ import {
 } from '@/lib/history/translationHistoryStore';
 
 export function useTranslationHistory() {
+  const {user} = useAuth();
+  const userId = user?.uid ?? null;
+
+  const getSnapshot = useCallback(() => {
+    if (!userId) return [];
+    return getHistorySnapshot();
+  }, [userId]);
+
   const records = useSyncExternalStore(
     subscribeHistory,
-    getHistorySnapshot,
+    getSnapshot,
     getHistoryServerSnapshot,
   );
 
