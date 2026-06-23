@@ -9,9 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="344a4c55-3b2b-431d-8b84-34b3789e4391" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(app)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(app)/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useTranslationHistory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useTranslationHistory.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/history/translationHistoryStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/history/translationHistoryStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SettingsPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SettingsPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/kit/icons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/kit/icons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/providers/Providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/providers/Providers.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +130,7 @@
       <workItem from="1782044736936" duration="5329000" />
       <workItem from="1782117691139" duration="8114000" />
       <workItem from="1782138064202" duration="8848000" />
-      <workItem from="1782201543266" duration="1616000" />
+      <workItem from="1782201543266" duration="4050000" />
     </task>
     <servers />
   </component>

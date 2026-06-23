@@ -8,12 +8,36 @@ import {TRANSLATION_PROVIDER_OPTIONS} from '@/lib/translation/providers';
 import type {OcrProviderId, TranslationProviderId} from '@/lib/providers/types';
 import {resetUserSettings} from '@/lib/config/userSettings';
 import {useUserSettings} from '@/hooks/useUserSettings';
+import {useTheme} from '@/contexts/ThemeContext';
+import type {Theme} from '@/lib/config/theme';
+
+const THEME_OPTIONS: {id: Theme; name: string; description: string}[] = [
+  {id: 'light', name: 'Light', description: 'Always use light mode'},
+  {id: 'dark', name: 'Dark', description: 'Always use dark mode'},
+  {id: 'system', name: 'System', description: 'Match your device settings'},
+];
 
 export default function SettingsPanel() {
   const {settings, updateSettings} = useUserSettings();
+  const {theme, setTheme} = useTheme();
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
+      <section className="overflow-visible rounded-(--radius-lg) border border-border bg-surface p-4 sm:p-6">
+        <h2 className="text-body-md font-semibold text-text">Appearance</h2>
+        <p className="mt-1 text-caption text-text-muted">
+          Choose how the app looks on your device.
+        </p>
+        <div className="mt-4">
+          <Select<Theme>
+            label="Theme"
+            value={theme}
+            options={THEME_OPTIONS}
+            onChange={setTheme}
+          />
+        </div>
+      </section>
+
       <section className="overflow-visible rounded-(--radius-lg) border border-border bg-surface p-4 sm:p-6">
         <h2 className="text-body-md font-semibold text-text">OCR Engine</h2>
         <p className="mt-1 text-caption text-text-muted">

@@ -4,6 +4,7 @@ import ProgressBar from '@/kit/ProgressBar';
 import {IconLogo} from '@/kit/icons';
 import {NAV_ITEMS} from '@/constants/navigation';
 import SidebarUserSection from '@/components/SidebarUserSection';
+import ThemeToggle from '@/components/ThemeToggle';
 import cn from '@/utils/mergeClassNameTailwind';
 
 type SidebarProps = {
@@ -33,6 +34,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
               <p className="text-caption text-primary">AI</p>
             </div>
           </div>
+          <ThemeToggle />
         </div>
 
         <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
