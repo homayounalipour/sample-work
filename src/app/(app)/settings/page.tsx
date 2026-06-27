@@ -6,7 +6,7 @@ export default function SettingsPage() {
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-4 sm:p-6">
       <HeaderTitle
         title="Settings"
-        description="Manage OCR and translation providers for your workspace."
+        description="Manage your profile, appearance, and workspace preferences."
       />
       <div className="flex flex-1 flex-col py-6">
         <SettingsPanel />

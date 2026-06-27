@@ -8,8 +8,7 @@ function loadImageFromSource(
     img.crossOrigin = 'anonymous';
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error('Failed to load image for OCR'));
-    img.src =
-      typeof source === 'string' ? source : URL.createObjectURL(source);
+    img.src = typeof source === 'string' ? source : URL.createObjectURL(source);
   });
 }
 
@@ -55,12 +54,11 @@ export async function preprocessImageForOcr(
   source: string | File | Blob,
   maxDimension = DEFAULT_APP_CONFIG.ocr.maxImageDimension,
 ): Promise<Blob> {
-  const objectUrl = typeof source === 'string' ? null : URL.createObjectURL(source);
+  const objectUrl =
+    typeof source === 'string' ? null : URL.createObjectURL(source);
 
   try {
-    const image = await loadImageFromSource(
-      objectUrl ?? (source as string),
-    );
+    const image = await loadImageFromSource(objectUrl ?? (source as string));
     const {width, height} = computeDimensions(
       image.naturalWidth,
       image.naturalHeight,

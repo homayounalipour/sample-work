@@ -87,7 +87,7 @@ export default function DashboardStatCards(props: DashboardStatCardsProps) {
             </p>
             <span
               className={cn(
-                'flex h-8 w-8 shrink-0 items-center justify-center rounded-(--radius-sm)',
+                'flex h-8 w-8 shrink-0 items-center justify-center rounded-sm',
                 card.iconBgClass,
               )}
             >

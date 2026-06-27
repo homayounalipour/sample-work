@@ -83,10 +83,10 @@ export default function DashboardQuickActions(
 
   return (
     <section className="rounded-(--radius-lg) border border-border bg-surface p-4 sm:p-5">
-      <h2 className="flex items-center gap-2 text-body-md font-semibold text-text">
+      <div className="flex items-center gap-2 text-body-md font-semibold text-text">
         <IconLightning className="h-4 w-4 text-info" aria-hidden />
-        Quick actions
-      </h2>
+        <span className="pt-1">Quick actions</span>
+      </div>
 
       <div className="mt-4 flex flex-col gap-3">
         <ActionCard

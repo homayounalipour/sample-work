@@ -9,7 +9,24 @@
   <component name="ChangeListManager">
     <list default="true" id="344a4c55-3b2b-431d-8b84-34b3789e4391" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(app)/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(app)/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(app)/settings/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(app)/settings/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HistoryItemCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HistoryItemCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SettingsPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SettingsPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SidebarUserSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SidebarUserSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardQuickActions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardQuickActions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardRecentActivity.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardRecentActivity.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardStatCards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardStatCards.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/DashboardWeeklyChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/DashboardWeeklyChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/contexts/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/kit/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/kit/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/firebase/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/firebase/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/firebase/errors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/firebase/errors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/image/preprocessImageForOcr.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/image/preprocessImageForOcr.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/ocr/providers/tesseract.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/ocr/providers/tesseract.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +145,7 @@
       <workItem from="1782138064202" duration="8848000" />
       <workItem from="1782201543266" duration="4050000" />
       <workItem from="1782562577737" duration="2551000" />
-      <workItem from="1782574587531" duration="714000" />
+      <workItem from="1782574587531" duration="5357000" />
     </task>
     <servers />
   </component>

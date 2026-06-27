@@ -1,12 +1,14 @@
 'use client';
 
 import {useState} from 'react';
+import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import Avatar from '@/kit/Avatar';
 import Button from '@/kit/Button';
 import Modal from '@/kit/Modal';
 import {useAuth} from '@/contexts/AuthContext';
 import {routes} from '@/constants/routes';
+import cn from '@/utils/mergeClassNameTailwind';
 
 export default function SidebarUserSection() {
   const {user, logout} = useAuth();
@@ -17,6 +19,9 @@ export default function SidebarUserSection() {
     return null;
   }
 
+  const displayName = user.displayName?.trim();
+  const primaryLabel = displayName || user.email;
+
   const handleConfirmSignOut = async () => {
     setSignOutConfirmOpen(false);
     await logout();
@@ -25,17 +30,34 @@ export default function SidebarUserSection() {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-3 rounded-md border border-border bg-surface p-3">
-        <Avatar name={user.email} size="md" />
+      <Link
+        href={routes.app.settings}
+        className={cn(
+          'flex items-center gap-3 rounded-md border border-border bg-surface p-3 transition-colors',
+          'hover:bg-surface-subtle',
+        )}
+      >
+        <Avatar
+          src={user.photoURL ?? undefined}
+          name={displayName ?? user.email}
+          size="md"
+        />
         <div className="min-w-0 flex-1">
           <p className="truncate text-body-md font-medium text-text">
-            {user.email}
+            {primaryLabel}
           </p>
-          <p className="truncate text-caption text-text-muted pt-2">
-            Signed in
-          </p>
+          {displayName && (
+            <p className="truncate text-caption text-text-muted pt-1">
+              {user.email}
+            </p>
+          )}
+          {!displayName && (
+            <p className="truncate text-caption text-text-muted pt-2">
+              Signed in
+            </p>
+          )}
         </div>
-      </div>
+      </Link>
       <Button
         variant="ghost"
         size="sm"

@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Badge from '@/kit/Badge';
 import Button from '@/kit/Button';
 import IconButton from '@/kit/IconButton';
 import Modal from '@/kit/Modal';
 import {IconStar, IconTrash} from '@/kit/icons';
 import {getLanguageByCode, SUPPORTED_LANGUAGES} from '@/constants/languages';
-import {getThumbnailUrl} from '@/lib/history/translationHistoryStore';
+import {useThumbnailUrl} from '@/hooks/useThumbnailUrl';
 import type {TranslationHistoryRecord} from '@/types/history';
 import cn from '@/utils/mergeClassNameTailwind';
 import {formatRelativeDate} from '@/utils/formatRelativeDate';
@@ -19,7 +19,7 @@ type HistoryItemCardProps = {
 
 export default function HistoryItemCard(props: HistoryItemCardProps) {
   const {record, onSelect, onToggleFavorite, onDelete} = props;
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const thumbnailUrl = useThumbnailUrl(record.id);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const handleConfirmDelete = () => {
@@ -35,25 +35,6 @@ export default function HistoryItemCard(props: HistoryItemCardProps) {
     SUPPORTED_LANGUAGES,
     record.targetLangCode,
   );
-
-  useEffect(() => {
-    let active = true;
-    let objectUrl: string | null = null;
-
-    void getThumbnailUrl(record.id).then(url => {
-      if (!active) {
-        if (url) URL.revokeObjectURL(url);
-        return;
-      }
-      objectUrl = url;
-      setThumbnailUrl(url);
-    });
-
-    return () => {
-      active = false;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [record.id]);
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-(--radius-lg) border border-border bg-surface transition-shadow hover:shadow-elevated">

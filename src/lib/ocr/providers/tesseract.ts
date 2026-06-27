@@ -41,10 +41,7 @@ export function resolveTesseractLanguages(language?: string): string {
   return mapped === 'eng' ? 'eng' : `${mapped}+eng`;
 }
 
-function processOcrResult(
-  data: unknown,
-  minConfidence: number,
-): OcrBlock[] {
+function processOcrResult(data: unknown, minConfidence: number): OcrBlock[] {
   const parsed = parseTesseractPage(data);
   const filtered = filterOcrBlocks(parsed, minConfidence);
   const merged = mergeOcrBlocks(filtered);

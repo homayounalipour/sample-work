@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import HistoryDetailModal from '@/components/HistoryDetailModal';
 import {
@@ -12,7 +12,7 @@ import Badge from '@/kit/Badge';
 import Button from '@/kit/Button';
 import {getLanguageByCode, SUPPORTED_LANGUAGES} from '@/constants/languages';
 import {routes} from '@/constants/routes';
-import {getThumbnailUrl} from '@/lib/history/translationHistoryStore';
+import {useThumbnailUrl} from '@/hooks/useThumbnailUrl';
 import type {TranslationHistoryRecord} from '@/types/history';
 import {formatDashboardRelativeTime} from '@/utils/formatDashboardRelativeTime';
 
@@ -34,7 +34,7 @@ function getActivitySnippet(record: TranslationHistoryRecord): string {
 
 function ActivityRow(props: ActivityRowProps) {
   const {record, onSelect} = props;
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const thumbnailUrl = useThumbnailUrl(record.id);
 
   const sourceLang = getLanguageByCode(
     SUPPORTED_LANGUAGES,
@@ -46,32 +46,13 @@ function ActivityRow(props: ActivityRowProps) {
   );
   const snippet = getActivitySnippet(record);
 
-  useEffect(() => {
-    let active = true;
-    let objectUrl: string | null = null;
-
-    void getThumbnailUrl(record.id).then(url => {
-      if (!active) {
-        if (url) URL.revokeObjectURL(url);
-        return;
-      }
-      objectUrl = url;
-      setThumbnailUrl(url);
-    });
-
-    return () => {
-      active = false;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [record.id]);
-
   return (
     <button
       type="button"
       onClick={() => onSelect(record)}
-      className="flex w-full gap-3 rounded-(--radius-md) p-2 text-left transition-colors hover:bg-surface-subtle"
+      className="flex w-full gap-3 rounded-md p-2 text-left transition-colors hover:bg-surface-subtle"
     >
-      <div className="h-12 w-12 shrink-0 overflow-hidden rounded-(--radius-md) bg-background-muted">
+      <div className="h-12 w-12 shrink-0 overflow-hidden rounded-md bg-background-muted">
         {thumbnailUrl ? (
           <img
             src={thumbnailUrl}
@@ -141,15 +122,17 @@ export default function DashboardRecentActivity(
   return (
     <section className="flex h-full flex-col rounded-(--radius-lg) border border-border bg-surface p-4 sm:p-5">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="flex items-center gap-2 text-body-md font-semibold text-text">
+        <div className="flex items-center justify-center gap-2">
           <IconClock className="h-4 w-4 text-info" aria-hidden />
-          Recent activity
-        </h2>
+          <span className="text-body-md font-semibold text-text pt-1">
+            Recent activity
+          </span>
+        </div>
         <Link
           href={routes.app.history}
           className="flex items-center gap-1 text-caption font-medium text-info hover:underline"
         >
-          View all
+          <span className="pt-1">View all</span>
           <IconExternalLink className="h-3.5 w-3.5" aria-hidden />
         </Link>
       </div>
@@ -161,7 +144,9 @@ export default function DashboardRecentActivity(
             Upload an image and translate it to see your recent work here.
           </p>
           <Link href={routes.app.new}>
-            <Button size="sm">Start a new translation</Button>
+            <Button className="h-6" size="sm">
+              Start a new translation
+            </Button>
           </Link>
         </div>
       ) : (
