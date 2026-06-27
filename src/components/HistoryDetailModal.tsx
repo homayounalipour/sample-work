@@ -71,7 +71,7 @@ export default function HistoryDetailModal(props: HistoryDetailModalProps) {
       onClose={onClose}
       title={record.originalFileName}
       description={`${sourceLang.name} → ${targetLang.name}`}
-      className="max-w-3xl"
+      className="2xl:max-w-3xl"
     >
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-3">

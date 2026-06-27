@@ -7,6 +7,8 @@ import {
 import cn from '@/utils/mergeClassNameTailwind';
 import Button from './Button';
 import React from 'react';
+import {IconClose} from '@/kit/icons';
+import IconButton from '@/kit/IconButton';
 
 type ModalProps = {
   open: boolean;
@@ -40,7 +42,13 @@ export default function Modal(props: ModalProps) {
             className,
           )}
         >
-          <DialogTitle className="text-h4 text-text">{title}</DialogTitle>
+          <div className="flex justify-between items-center">
+            <DialogTitle className="text-h4 text-text">{title}</DialogTitle>
+            <IconButton variant="ghost" onClick={onClose}>
+              <IconClose />
+            </IconButton>
+          </div>
+
           {description && (
             <p className="mt-2 text-body-md text-text-subtle">{description}</p>
           )}

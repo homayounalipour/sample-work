@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import {forwardRef} from 'react';
 import ProgressBar from '@/kit/ProgressBar';
@@ -9,11 +11,12 @@ import cn from '@/utils/mergeClassNameTailwind';
 type SidebarProps = {
   activeNav?: string;
   mobileOpen?: boolean;
+  onNavigate?: () => void;
 };
 
 const Sidebar = forwardRef<HTMLElement, SidebarProps>(
   function Sidebar(props, ref) {
-    const {activeNav = 'new', mobileOpen = false} = props;
+    const {activeNav = 'new', mobileOpen = false, onNavigate} = props;
 
     return (
       <aside
@@ -23,7 +26,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
           mobileOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <div className="mb-8 flex items-center justify-between gap-3 px-2">
+        <div className="mb-8 flex items-center justify-between gap-3 sm:px-2">
           <div className="flex items-center gap-3">
             <img
               src="/favicon.ico"
@@ -49,6 +52,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
               <Link
                 key={item.id}
                 href={item.href}
+                onClick={() => onNavigate?.()}
                 className={cn(
                   'flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-body-md transition-colors',
                   isActive

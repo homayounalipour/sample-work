@@ -9,7 +9,7 @@ const FEATURES = [
 
 export default function RegisterDescription() {
   return (
-    <div className="flex flex-col justify-center bg-background-muted/20 px-6 py-8 sm:px-8 sm:py-10 lg:px-10">
+    <div className="flex flex-col justify-center bg-background-muted/20 px-6 py-2 sm:px-8 sm:py-10 lg:px-10">
       <AuthBrand align="start" className="mb-6 sm:mb-8" />
 
       <div>
@@ -29,7 +29,7 @@ export default function RegisterDescription() {
         {FEATURES.map(feature => (
           <li
             key={feature}
-            className="flex items-start gap-2.5 text-sm text-text-subtle sm:text-base"
+            className="flex items-center gap-2.5 text-sm text-text-subtle sm:text-base"
           >
             <IconCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-success sm:h-5 sm:w-5" />
             <span>{feature}</span>
