@@ -53,6 +53,10 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 export function getActiveNavId(pathname: string): string {
+  if (pathname === routes.auth.login || pathname === routes.auth.register) {
+    return '';
+  }
+
   const match = NAV_ITEMS.find(
     item => pathname === item.href || pathname.startsWith(`${item.href}/`),
   );
@@ -60,9 +64,25 @@ export function getActiveNavId(pathname: string): string {
   return match?.id ?? 'new';
 }
 
+const AUTH_PAGE_META: Record<string, Pick<NavItem, 'title' | 'description'>> = {
+  [routes.auth.login]: {
+    title: 'Sign in',
+    description: 'Sign in to access your translations and history.',
+  },
+  [routes.auth.register]: {
+    title: 'Create account',
+    description: 'Create an account to save your translations and history.',
+  },
+};
+
 export function getPageMeta(
   pathname: string,
 ): Pick<NavItem, 'title' | 'description'> {
+  const authMeta = AUTH_PAGE_META[pathname];
+  if (authMeta) {
+    return authMeta;
+  }
+
   const match = NAV_ITEMS.find(
     item => pathname === item.href || pathname.startsWith(`${item.href}/`),
   );

@@ -1,10 +1,5 @@
-import PlaceholderPage from '@/components/PlaceholderPage';
+import DashboardPageContent from '@/components/DashboardPageContent';
 
 export default function DashboardPage() {
-  return (
-    <PlaceholderPage
-      title="Dashboard"
-      description="Overview of your translation activity."
-    />
-  );
+  return <DashboardPageContent />;
 }

@@ -1,6 +1,11 @@
 import Button from '@/kit/Button';
 import IconButton from '@/kit/IconButton';
+import Select from '@/kit/Select';
 import {IconDownload, IconHistory} from '@/kit/icons';
+import {
+  EXPORT_FORMAT_OPTIONS,
+  type ExportFormat,
+} from '@/lib/image/exportFormat';
 import {useRouter} from 'next/navigation';
 import {routes} from '@/constants/routes';
 
@@ -8,10 +13,20 @@ type TranslationHeaderProps = {
   onExport: () => void;
   exportDisabled?: boolean;
   isExporting?: boolean;
+  exportFormat: ExportFormat;
+  onExportFormatChange: (format: ExportFormat) => void;
+  exportFormatDisabled?: boolean;
 };
 
 export default function TranslationHeader(props: TranslationHeaderProps) {
-  const {exportDisabled, isExporting, onExport} = props;
+  const {
+    exportDisabled,
+    isExporting,
+    onExport,
+    exportFormat,
+    onExportFormatChange,
+    exportFormatDisabled,
+  } = props;
   const router = useRouter();
 
   return (
@@ -25,10 +40,17 @@ export default function TranslationHeader(props: TranslationHeaderProps) {
       <div className="flex shrink-0 items-center justify-end gap-2 self-end sm:gap-3 lg:self-auto">
         <IconButton
           aria-label="History"
-          onClick={() => router.push(routes.app.settings)}
+          onClick={() => router.push(routes.app.history)}
         >
           <IconHistory />
         </IconButton>
+        <Select<ExportFormat>
+          value={exportFormat}
+          options={EXPORT_FORMAT_OPTIONS}
+          onChange={onExportFormatChange}
+          disabled={exportFormatDisabled}
+          className="w-28"
+        />
         <Button
           leftIcon={<IconDownload />}
           onClick={onExport}

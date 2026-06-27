@@ -3,6 +3,7 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import sonarjs from 'eslint-plugin-sonarjs';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -31,6 +32,7 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       prettier,
+      sonarjs,
     },
   },
   {
@@ -39,6 +41,10 @@ const eslintConfig = defineConfig([
       'no-unused-vars': 'off',
       'no-duplicate-imports': ['error', {includeExports: true}],
       'no-redeclare': 'off',
+      'sonarjs/no-identical-functions': 'warn',
+      'sonarjs/no-duplicated-branches': 'warn',
+      'sonarjs/no-identical-expressions': 'warn',
+      'sonarjs/no-all-duplicated-branches': 'warn',
       '@typescript-eslint/no-redeclare': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',

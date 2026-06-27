@@ -11,7 +11,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 export default function Input(props: InputProps) {
   const {className, leftIcon, rightIcon, ...rest} = props;
   return (
-    <div className="relative w-full">
+    <div className="relative min-w-0 w-full">
       {leftIcon && (
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
           {leftIcon}

@@ -14,7 +14,7 @@ export default function ExportModal(props: ExportModalProps) {
       open={open}
       onClose={onClose}
       title="Export Complete!"
-      description="Your translated image has been downloaded successfully."
+      description="Your translated file has been downloaded successfully."
       primaryAction={{label: 'View File', onClick: onViewFile}}
       secondaryAction={{label: 'Close', onClick: onClose}}
     >

@@ -21,6 +21,9 @@ export default function TranslationWorkspace() {
         onExport={workflow.onExport}
         exportDisabled={!hasImage || workflow.translations.length === 0}
         isExporting={workflow.status === 'exporting'}
+        exportFormat={workflow.exportFormat}
+        onExportFormatChange={workflow.setExportFormat}
+        exportFormatDisabled={!hasImage || workflow.translations.length === 0}
       />
 
       {workflow.error && (
@@ -74,6 +77,7 @@ export default function TranslationWorkspace() {
                 blocks={workflow.ocrBlocks}
                 isLoading={isOcrRunning}
                 progress={workflow.ocrProgress}
+                hasImage={hasImage}
               />
               <TranslationPanel
                 sourceLang={workflow.sourceLang}
@@ -108,7 +112,9 @@ export default function TranslationWorkspace() {
         open={workflow.exportModalOpen}
         onClose={() => workflow.setExportModalOpen(false)}
         onViewFile={() => {
-          if (workflow.displayUrl) window.open(workflow.displayUrl, '_blank');
+          if (workflow.lastExportedUrl) {
+            window.open(workflow.lastExportedUrl, '_blank');
+          }
           workflow.setExportModalOpen(false);
         }}
       />

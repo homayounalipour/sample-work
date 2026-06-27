@@ -15,29 +15,32 @@ export type SelectOption<T extends string = string> = {
 };
 
 type SelectProps<T extends string> = {
-  label: string;
+  label?: string;
   value: T;
   options: SelectOption<T>[];
   onChange: (value: T) => void;
   disabled?: boolean;
+  className?: string;
 };
 
 export default function Select<T extends string>(props: SelectProps<T>) {
-  const {label, value, options, onChange, disabled = false} = props;
+  const {label, value, options, onChange, disabled = false, className} = props;
   const selected =
     options.find(option => option.id === value) ?? options[0] ?? null;
 
   if (!selected) return null;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', className)}>
       <Listbox
         value={selected}
         onChange={option => onChange(option.id)}
         disabled={disabled}
         by="id"
       >
-        <Label className="text-body-md  font-medium text-text">{label}</Label>
+        {label && (
+          <Label className="text-body-md  font-medium text-text">{label}</Label>
+        )}
         <div className="relative">
           <ListboxButton
             className={cn(

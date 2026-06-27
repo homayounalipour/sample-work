@@ -5,6 +5,12 @@ export type AppConfig = {
     provider: OcrProviderId;
     defaultLanguages: string;
     minConfidence: number;
+    maxImageDimension: number;
+    verify: {
+      minTotalChars: number;
+      minAvgConfidence: number;
+      minAlphanumericRatio: number;
+    };
   };
   translation: {
     provider: TranslationProviderId;
@@ -15,8 +21,14 @@ export type AppConfig = {
     targetLang: string;
   };
   export: {
-    format: 'png' | 'jpeg' | 'webp';
+    format: 'png' | 'jpeg' | 'pdf';
     quality: number;
+  };
+  history: {
+    maxEntries: number;
+    thumbnailMaxWidth: number;
+    thumbnailMaxDpr: number;
+    thumbnailQuality: number;
   };
 };
 
@@ -25,6 +37,12 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
     provider: 'tesseract',
     defaultLanguages: 'jpn+eng',
     minConfidence: 0,
+    maxImageDimension: 2400,
+    verify: {
+      minTotalChars: 3,
+      minAvgConfidence: 25,
+      minAlphanumericRatio: 0.3,
+    },
   },
   translation: {
     provider: 'mymemory',
@@ -36,7 +54,13 @@ export const DEFAULT_APP_CONFIG: AppConfig = {
   },
   export: {
     format: 'png',
-    quality: 1,
+    quality: 0.92,
+  },
+  history: {
+    maxEntries: 50,
+    thumbnailMaxWidth: 480,
+    thumbnailMaxDpr: 2,
+    thumbnailQuality: 0.92,
   },
 };
 

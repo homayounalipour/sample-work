@@ -2,8 +2,9 @@ import Button from '@/kit/Button';
 import LanguageSelector, {type LanguageOption} from '@/kit/LanguageSelector';
 import {getTargetLanguages} from '@/constants/languages';
 import Spinner from '@/kit/Spinner';
-import {IconArrowRight, IconSwap} from '@/kit/icons';
+import {IconArrowRight, IconCheck, IconCopy, IconSwap} from '@/kit/icons';
 import IconButton from '@/kit/IconButton';
+import {useCopyBlockTexts} from '@/hooks/useCopyBlockTexts';
 import type {TranslationBlock} from '@/types/types';
 
 type TranslationPanelProps = {
@@ -39,6 +40,8 @@ export default function TranslationPanel(props: TranslationPanelProps) {
     sourceLang,
   } = props;
 
+  const {copied, onCopy} = useCopyBlockTexts(translations);
+
   const sourceOptions = languages.filter(
     language => language.code !== targetLang.code,
   );
@@ -46,7 +49,7 @@ export default function TranslationPanel(props: TranslationPanelProps) {
     language => language.code !== sourceLang.code,
   );
   return (
-    <div className="flex min-h-56 max-h-96 min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-80 xl:max-h-none xl:flex-none xl:shrink-0">
+    <div className="flex min-w-0 w-full flex-col rounded-(--radius-lg) border border-border bg-surface md:max-h-none md:min-h-0 md:flex-1 xl:w-80 xl:max-h-none xl:flex-none xl:shrink-0">
       <div className="border-b border-border px-4 py-3 sm:py-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
           <LanguageSelector
@@ -70,6 +73,21 @@ export default function TranslationPanel(props: TranslationPanelProps) {
             className="flex-1"
           />
         </div>
+      </div>
+
+      <div className="flex items-center justify-between border-b border-border px-4 py-2">
+        <h3 className="text-caption font-medium text-text-muted">
+          Translated text
+        </h3>
+        <IconButton
+          size="sm"
+          aria-label="Copy translation text"
+          disabled={isTranslating || translations.length === 0}
+          onClick={onCopy}
+          className="h-6 w-6"
+        >
+          {copied ? <IconCheck /> : <IconCopy />}
+        </IconButton>
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto p-4">

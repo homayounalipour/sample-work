@@ -1,10 +1,5 @@
-import PlaceholderPage from '@/components/PlaceholderPage';
+import FavoritesPageContent from '@/components/FavoritesPageContent';
 
 export default function FavoritesPage() {
-  return (
-    <PlaceholderPage
-      title="Favorites"
-      description="Quick access to saved translations."
-    />
-  );
+  return <FavoritesPageContent />;
 }

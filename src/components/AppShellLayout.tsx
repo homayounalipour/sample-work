@@ -55,6 +55,7 @@ export default function AppShellLayout(props: PropsWithChildren) {
         ref={sidebarRef}
         activeNav={activeNav}
         mobileOpen={sidebarOpen}
+        onNavigate={isMobileViewport ? closeSidebar : undefined}
       />
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <header className="flex shrink-0 items-start gap-3 border-b border-border px-4 py-3 lg:hidden">

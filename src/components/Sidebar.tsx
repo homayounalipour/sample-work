@@ -1,19 +1,22 @@
+'use client';
+
 import Link from 'next/link';
 import {forwardRef} from 'react';
-import Avatar from '@/kit/Avatar';
 import ProgressBar from '@/kit/ProgressBar';
-import {IconLogo} from '@/kit/icons';
 import {NAV_ITEMS} from '@/constants/navigation';
+import SidebarUserSection from '@/components/SidebarUserSection';
+import ThemeToggle from '@/components/ThemeToggle';
 import cn from '@/utils/mergeClassNameTailwind';
 
 type SidebarProps = {
   activeNav?: string;
   mobileOpen?: boolean;
+  onNavigate?: () => void;
 };
 
 const Sidebar = forwardRef<HTMLElement, SidebarProps>(
   function Sidebar(props, ref) {
-    const {activeNav = 'new', mobileOpen = false} = props;
+    const {activeNav = 'new', mobileOpen = false, onNavigate} = props;
 
     return (
       <aside
@@ -23,9 +26,15 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
           mobileOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <div className="mb-8 flex items-center justify-between gap-3 px-2">
+        <div className="mb-8 flex items-center justify-between gap-3 sm:px-2">
           <div className="flex items-center gap-3">
-            <IconLogo />
+            <img
+              src="/favicon.ico"
+              alt="ImageTranslate logo"
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0 rounded-md"
+            />
             <div>
               <p className="text-body-md font-semibold text-text">
                 ImageTranslate
@@ -33,6 +42,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
               <p className="text-caption text-primary">AI</p>
             </div>
           </div>
+          <ThemeToggle />
         </div>
 
         <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
@@ -42,6 +52,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
               <Link
                 key={item.id}
                 href={item.href}
+                onClick={() => onNavigate?.()}
                 className={cn(
                   'flex items-center gap-3 rounded-md px-3 py-2.5 text-left text-body-md transition-colors',
                   isActive
@@ -60,17 +71,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
 
         <div className="mt-auto space-y-4 px-2">
           <ProgressBar value={6.5} max={10} showLabel label="Storage" />
-          <div className="flex items-center gap-3 rounded-md border border-border bg-surface p-3">
-            <Avatar name="John Doe" size="md" />
-            <div className="min-w-0">
-              <p className="truncate text-body-md font-medium text-text">
-                John Doe
-              </p>
-              <p className="truncate text-caption text-text-muted">
-                john@example.com
-              </p>
-            </div>
-          </div>
+          <SidebarUserSection />
         </div>
       </aside>
     );
